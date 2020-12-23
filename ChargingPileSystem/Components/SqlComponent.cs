@@ -73,6 +73,7 @@ namespace ChargingPileSystem.Components
                                 }
                             }
                             ComponentFlag = false;
+                            ReadTime = DateTime.Now;
                         }
                     }
                     catch (ThreadAbortException) { }

@@ -18,6 +18,7 @@ using DevExpress.Utils;
 using DevExpress.XtraBars.Docking2010.Customization;
 using DevExpress.XtraBars.Docking2010.Views.WindowsUI;
 using ChargingPileSystem.Views.Setting;
+using ChargingPileSystem.EF_Module;
 
 namespace ChargingPileSystem.Views.ChargingPile
 {
@@ -39,9 +40,10 @@ namespace ChargingPileSystem.Views.ChargingPile
         /// 圖表時間
         /// </summary>
         private DateTime LineTime { get; set; }
-        public MasterMeterUserControl(ElectricConfig electricConfig, SqlMethod sqlMethod,Form1 form1)
+        public MasterMeterUserControl(ElectricConfig electricConfig, SqlMethod sqlMethod,Form1 form1, List<GatewayConfig> gatewayConfigs)
         {
             InitializeComponent();
+            GatewayConfigs = gatewayConfigs;
             Form1 = form1;
             groupControl.CustomHeaderButtons[0].Properties.Image = imageCollection1.Images["aligncenter"];
             ValueFont = DaykWhlabelControl.Font;//本日累積用電、本月累積用電 字型大小一樣
@@ -69,28 +71,28 @@ namespace ChargingPileSystem.Views.ChargingPile
             LinechartControl.CrosshairOptions.GroupHeaderTextOptions.Font = new System.Drawing.Font("微軟正黑體", 12);
             LinechartControl.CrosshairOptions.ShowArgumentLabels = true;//是否顯示Y軸垂直線
             LinechartControl.SideBySideEqualBarWidth = false;//線條是否需要相等寬度
-            List<LineModule> line = Create_Line();
-            if (sqlMethod != null)
-            {
+            //List<LineModule> line = Create_Line();
+            //if (sqlMethod != null)
+            //{
                 var SQLline = sqlMethod.Search_ThreePhaseElectricMeter_Log(DateTime.Now.ToString("yyyyMMdd"), DateTime.Now.ToString("yyyyMMdd"), electricConfig.GatewayIndex, electricConfig.DeviceIndex);
-                for (int i = 0; i < SQLline.Count; i++)
-                {
-                    foreach (var item in line)
-                    {
-                        if (item.Argument == SQLline[i].ttimen)
-                        {
-                            item.Value = Convert.ToDouble(SQLline[i].kw);
-                            break;
-                        }
-                    }
-                }
-            }
+            //    for (int i = 0; i < SQLline.Count; i++)
+            //    {
+            //        foreach (var item in line)
+            //        {
+            //            if (item.Argument == SQLline[i].ttimen)
+            //            {
+            //                item.Value = Convert.ToDouble(SQLline[i].kw);
+            //                break;
+            //            }
+            //        }
+            //    }
+            //}
             TotalMeterSeries = new Series("總表累積量", ViewType.Line);
-            TotalMeterSeries.DataSource = line;
-            TotalMeterSeries.ArgumentDataMember = "Argument";
-            TotalMeterSeries.ValueDataMembers.AddRange(new string[] { "Value" });
-            TotalMeterSeries.CrosshairLabelPattern = "{S} {V:.##} kW";
-            TotalMeterSeries.LabelsVisibility = DefaultBoolean.False;
+            TotalMeterSeries.DataSource = SQLline;
+            TotalMeterSeries.ArgumentDataMember = "ttimen";
+            TotalMeterSeries.ValueDataMembers.AddRange(new string[] { "kw" });
+            TotalMeterSeries.CrosshairLabelPattern = "{S} \r時間 : {A:yyyy-MM-dd HH:mm}\r{V:0.##} kW";
+            //TotalMeterSeries.LabelsVisibility = DefaultBoolean.False;
             if (LinechartControl != null)
             {
                 if (LinechartControl.Series.Count == 0)
@@ -98,7 +100,7 @@ namespace ChargingPileSystem.Views.ChargingPile
                     LinechartControl.Series.Add(TotalMeterSeries);
                 }
             }
-            if (LinechartControl.DataSource != null && LinechartControl.Series.Count > 0)
+            if (TotalMeterSeries.DataSource != null && LinechartControl.Series.Count > 0)
             {
                 XYDiagram diagram = (XYDiagram)LinechartControl.Diagram;
                 if (diagram != null)
@@ -108,13 +110,13 @@ namespace ChargingPileSystem.Views.ChargingPile
                     diagram.AxisX.DateTimeScaleOptions.MeasureUnit = DateTimeMeasureUnit.Minute; // 顯示設定
                     diagram.AxisX.DateTimeScaleOptions.GridAlignment = DateTimeGridAlignment.Minute; // 刻度設定 
                     diagram.AxisX.Label.Angle = 90;
-                    diagram.AxisX.Label.TextPattern = "{A:yyyy-MM-dd HH:mm}";//X軸顯示
+                    diagram.AxisX.Label.TextPattern = "{A:HH:mm}";//X軸顯示
                     diagram.AxisX.WholeRange.SideMarginsValue = 0;//不需要邊寬
                     diagram.AxisY.WholeRange.AlwaysShowZeroLevel = false;
                 }
                 LinechartControl.CrosshairOptions.ShowArgumentLabels = false;//是否顯示Y軸垂直線
                 LinechartControl.CrosshairOptions.ShowArgumentLine = false;//是否顯示Y軸垂直線
-                LinechartControl.CrosshairOptions.ShowCrosshairLabels = false;//是否顯示Y軸垂直線
+                //LinechartControl.CrosshairOptions.ShowCrosshairLabels = false;//是否顯示Y軸垂直線
             }
             LineTime = DateTime.Now;
             groupControl.CustomHeaderButtons[0].Properties.Enabled = false;
@@ -229,23 +231,23 @@ namespace ChargingPileSystem.Views.ChargingPile
                 TimeSpan timeSpan = DateTime.Now.Subtract(LineTime);
                 if (timeSpan.TotalSeconds > 20)
                 {
-                    List<LineModule> line = Create_Line();
-                    if (SqlMethod != null)
-                    {
-                        var SQLline = SqlMethod.Search_ThreePhaseElectricMeter_Log(DateTime.Now.ToString("yyyyMMdd"), DateTime.Now.ToString("yyyyMMdd"), ElectricConfig.GatewayIndex, ElectricConfig.DeviceIndex);
-                        for (int i = 0; i < SQLline.Count; i++)
-                        {
-                            foreach (var item in line)
-                            {
-                                if (item.Argument == SQLline[i].ttimen)
-                                {
-                                    item.Value = Convert.ToDouble(SQLline[i].kw);
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    TotalMeterSeries.DataSource = line;
+                //    List<LineModule> line = Create_Line();
+                //    if (SqlMethod != null)
+                //    {
+                       var SQLline = SqlMethod.Search_ThreePhaseElectricMeter_Log(DateTime.Now.ToString("yyyyMMdd"), DateTime.Now.ToString("yyyyMMdd"), ElectricConfig.GatewayIndex, ElectricConfig.DeviceIndex);
+                //        for (int i = 0; i < SQLline.Count; i++)
+                //        {
+                //            foreach (var item in line)
+                //            {
+                //                if (item.Argument == SQLline[i].ttimen)
+                //                {
+                //                    item.Value = Convert.ToDouble(SQLline[i].kw);
+                //                    break;
+                //                }
+                //            }
+                //        }
+                //    }
+                    TotalMeterSeries.DataSource = SQLline;
                     LinechartControl.Refresh();
                     LineTime = DateTime.Now;
                 }
@@ -319,11 +321,12 @@ namespace ChargingPileSystem.Views.ChargingPile
                 Form1.FlyoutFlag = true;
                 PanelControl panelControl = new PanelControl()
                 {
-                    Size = new Size(359, 118)
+                    Size = new Size(359, 210)
                 };
                 Form1.flyout = new FlyoutDialog(Form1, panelControl);
                 Form1.flyout.Properties.Style = FlyoutStyle.Popup;
-                DeviceNameSettingUserControl systemSettingUserControl = new DeviceNameSettingUserControl(ElectricConfig.DeviceName, ElectricConfig.GatewayIndex, ElectricConfig.DeviceIndex) { Form1 = Form1, SqlMethod = SqlMethod };
+                var GatewayConfig = GatewayConfigs.Where(g => g.GatewayIndex == ElectricConfig.GatewayIndex).Single();
+                DeviceNameSettingUserControl systemSettingUserControl = new DeviceNameSettingUserControl(GatewayConfig.GatewayName, ElectricConfig.DeviceID,ElectricConfig.DeviceName, ElectricConfig.GatewayIndex, ElectricConfig.DeviceIndex) { Form1 = Form1, SqlMethod = SqlMethod };
                 systemSettingUserControl.Parent = panelControl;
                 Form1.flyout.Show();
             }

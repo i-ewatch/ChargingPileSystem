@@ -73,7 +73,7 @@ namespace ChargingPileSystem.Views.ChargingPile
             this.groupControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupControl.Location = new System.Drawing.Point(0, 0);
             this.groupControl.Name = "groupControl";
-            this.groupControl.Size = new System.Drawing.Size(363, 222);
+            this.groupControl.Size = new System.Drawing.Size(334, 222);
             this.groupControl.TabIndex = 1;
             this.groupControl.Text = "groupControl1";
             this.groupControl.CustomButtonClick += new DevExpress.XtraBars.Docking2010.BaseButtonEventHandler(this.groupControl_CustomButtonClick);
@@ -87,7 +87,7 @@ namespace ChargingPileSystem.Views.ChargingPile
             this.TotalkWhlabelControl.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
             this.TotalkWhlabelControl.Location = new System.Drawing.Point(142, 186);
             this.TotalkWhlabelControl.Name = "TotalkWhlabelControl";
-            this.TotalkWhlabelControl.Size = new System.Drawing.Size(167, 27);
+            this.TotalkWhlabelControl.Size = new System.Drawing.Size(138, 27);
             this.TotalkWhlabelControl.TabIndex = 11;
             this.TotalkWhlabelControl.Text = "-";
             // 
@@ -100,7 +100,7 @@ namespace ChargingPileSystem.Views.ChargingPile
             this.AfterkWhlabelControl.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
             this.AfterkWhlabelControl.Location = new System.Drawing.Point(142, 141);
             this.AfterkWhlabelControl.Name = "AfterkWhlabelControl";
-            this.AfterkWhlabelControl.Size = new System.Drawing.Size(167, 27);
+            this.AfterkWhlabelControl.Size = new System.Drawing.Size(138, 27);
             this.AfterkWhlabelControl.TabIndex = 10;
             this.AfterkWhlabelControl.Text = "-";
             // 
@@ -113,7 +113,7 @@ namespace ChargingPileSystem.Views.ChargingPile
             this.NowkWhlabelControl.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
             this.NowkWhlabelControl.Location = new System.Drawing.Point(142, 96);
             this.NowkWhlabelControl.Name = "NowkWhlabelControl";
-            this.NowkWhlabelControl.Size = new System.Drawing.Size(167, 27);
+            this.NowkWhlabelControl.Size = new System.Drawing.Size(138, 27);
             this.NowkWhlabelControl.TabIndex = 9;
             this.NowkWhlabelControl.Text = "-";
             // 
@@ -126,15 +126,16 @@ namespace ChargingPileSystem.Views.ChargingPile
             this.NowkWlabelControl.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
             this.NowkWlabelControl.Location = new System.Drawing.Point(142, 51);
             this.NowkWlabelControl.Name = "NowkWlabelControl";
-            this.NowkWlabelControl.Size = new System.Drawing.Size(167, 27);
+            this.NowkWlabelControl.Size = new System.Drawing.Size(138, 27);
             this.NowkWlabelControl.TabIndex = 8;
             this.NowkWlabelControl.Text = "-";
             // 
             // labelControl8
             // 
+            this.labelControl8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.labelControl8.Appearance.Font = new System.Drawing.Font("微軟正黑體", 16F);
             this.labelControl8.Appearance.Options.UseFont = true;
-            this.labelControl8.Location = new System.Drawing.Point(313, 186);
+            this.labelControl8.Location = new System.Drawing.Point(284, 186);
             this.labelControl8.Name = "labelControl8";
             this.labelControl8.Size = new System.Drawing.Size(45, 27);
             this.labelControl8.TabIndex = 7;
@@ -142,9 +143,10 @@ namespace ChargingPileSystem.Views.ChargingPile
             // 
             // labelControl7
             // 
+            this.labelControl7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.labelControl7.Appearance.Font = new System.Drawing.Font("微軟正黑體", 16F);
             this.labelControl7.Appearance.Options.UseFont = true;
-            this.labelControl7.Location = new System.Drawing.Point(313, 141);
+            this.labelControl7.Location = new System.Drawing.Point(284, 141);
             this.labelControl7.Name = "labelControl7";
             this.labelControl7.Size = new System.Drawing.Size(45, 27);
             this.labelControl7.TabIndex = 6;
@@ -152,9 +154,10 @@ namespace ChargingPileSystem.Views.ChargingPile
             // 
             // labelControl6
             // 
+            this.labelControl6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelControl6.Appearance.Font = new System.Drawing.Font("微軟正黑體", 16F);
             this.labelControl6.Appearance.Options.UseFont = true;
-            this.labelControl6.Location = new System.Drawing.Point(315, 96);
+            this.labelControl6.Location = new System.Drawing.Point(286, 96);
             this.labelControl6.Name = "labelControl6";
             this.labelControl6.Size = new System.Drawing.Size(45, 27);
             this.labelControl6.TabIndex = 5;
@@ -162,9 +165,10 @@ namespace ChargingPileSystem.Views.ChargingPile
             // 
             // labelControl5
             // 
+            this.labelControl5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelControl5.Appearance.Font = new System.Drawing.Font("微軟正黑體", 16F);
             this.labelControl5.Appearance.Options.UseFont = true;
-            this.labelControl5.Location = new System.Drawing.Point(326, 51);
+            this.labelControl5.Location = new System.Drawing.Point(297, 51);
             this.labelControl5.Name = "labelControl5";
             this.labelControl5.Size = new System.Drawing.Size(32, 27);
             this.labelControl5.TabIndex = 4;
@@ -222,7 +226,7 @@ namespace ChargingPileSystem.Views.ChargingPile
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupControl);
             this.Name = "SubMeterUserControl";
-            this.Size = new System.Drawing.Size(363, 222);
+            this.Size = new System.Drawing.Size(334, 222);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl)).EndInit();
             this.groupControl.ResumeLayout(false);
             this.groupControl.PerformLayout();

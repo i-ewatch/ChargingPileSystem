@@ -17,6 +17,7 @@ namespace ChargingPileSystem.EF_Module
         public decimal KwhStart2 { get; set; }
         public decimal KwhEnd2 { get; set; }
         public decimal KwhTotal { get; set; }
+        public decimal UnitPrice { get; set; }
         public decimal Price { get; set; }
     }
 }

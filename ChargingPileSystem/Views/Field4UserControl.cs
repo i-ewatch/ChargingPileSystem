@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ChargingPileSystem.Protocols;
+using ChargingPileSystem.EF_Module;
 
 namespace ChargingPileSystem.Views
 {
@@ -30,6 +31,10 @@ namespace ChargingPileSystem.Views
         /// 各別電表設備資訊
         /// </summary>
         public ElectricConfig ElectricConfig { get; set; }
+        /// <summary>
+        /// 閘道器設備資訊
+        /// </summary>
+        public List<GatewayConfig> GatewayConfigs { get; set; } = new List<GatewayConfig>();
         /// <summary>
         /// 總通訊數值
         /// </summary>

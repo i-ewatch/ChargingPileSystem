@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ChargingPileSystem.Methods;
+using ChargingPileSystem.EF_Module;
 
 namespace ChargingPileSystem.Views.ChargingPile
 {
@@ -36,7 +37,7 @@ namespace ChargingPileSystem.Views.ChargingPile
         /// 頁數
         /// </summary>
         private int ViewIndex { get; set; } = 0;
-        public ChargingPileView(List<ElectricConfig> electricConfigs, SqlMethod sqlMethod,Form1 form1)
+        public ChargingPileView(List<ElectricConfig> electricConfigs, SqlMethod sqlMethod, Form1 form1, List<GatewayConfig> gatewayConfigs)
         {
             InitializeComponent();
             Form1 = form1;
@@ -46,12 +47,12 @@ namespace ChargingPileSystem.Views.ChargingPile
                 {
                     if (item.TotalMeterFlag)//總電表
                     {
-                        MasterMeterUserControl masterMeter = new MasterMeterUserControl(item, sqlMethod, form1) { SqlMethod = sqlMethod };
+                        MasterMeterUserControl masterMeter = new MasterMeterUserControl(item, sqlMethod, form1, gatewayConfigs) { SqlMethod = sqlMethod };
                         MasterMeters.Add(masterMeter);
                         MasterMetenavigationFrame.AddPage(masterMeter);
                     }
                 }
-                ChargingPileUserControl = new ChargingPileUserControl(electricConfigs, sqlMethod, form1) { SqlMethod = sqlMethod };
+                ChargingPileUserControl = new ChargingPileUserControl(electricConfigs, sqlMethod, form1, gatewayConfigs) { SqlMethod = sqlMethod, GatewayConfigs = GatewayConfigs };
                 ChargingPilepanelControl.Controls.Add(ChargingPileUserControl);
                 ChangeViewTime = DateTime.Now;
             }
@@ -79,10 +80,11 @@ namespace ChargingPileSystem.Views.ChargingPile
                     ChangeViewTime = DateTime.Now;
                 }
             }
-            else if(timeSpan.TotalSeconds > 10 && !Form1.LockFlag)
+            else if (timeSpan.TotalSeconds > 10 && !Form1.LockFlag)
             {
                 ChangeViewTime = DateTime.Now;
             }
+            #endregion
             if (ElectricConfigs != null)
             {
                 MasterMeterIndex = 0;
@@ -96,7 +98,6 @@ namespace ChargingPileSystem.Views.ChargingPile
                 }
                 MasterMeters[MasterMetenavigationFrame.SelectedPageIndex].AbsProtocols = AbsProtocols;
                 MasterMeters[MasterMetenavigationFrame.SelectedPageIndex].TextChange();
-                #endregion
                 #region 分電表
                 ChargingPileUserControl.AbsProtocols = AbsProtocols;
                 ChargingPileUserControl.ElectricConfigs = ElectricConfigs;

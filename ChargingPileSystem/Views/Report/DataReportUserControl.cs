@@ -74,13 +74,13 @@ namespace ChargingPileSystem.Views.Report
                             #region 報表
                             for (int i = 0; i < gridView1.Columns.Count; i++)
                             {
-                                if (gridView1.Columns[i].Name == "ttimen")
+                                if (gridView1.Columns[i].FieldName == "ttimen")
                                 {
                                     gridView1.Columns[i].Caption = "時間";
                                     gridView1.Columns[i].DisplayFormat.FormatString = "yyyy/MM/dd HH:mm";
                                     gridView1.Columns[i].BestFit();
                                 }
-                                else if (gridView1.Columns[i].Name == "kw")
+                                else if (gridView1.Columns[i].FieldName == "kw")
                                 {
                                     gridView1.Columns[i].Caption = "即時用電";
                                     gridView1.Columns[i].BestFit();
@@ -95,8 +95,8 @@ namespace ChargingPileSystem.Views.Report
                             Series series = new Series($"{SearchDevicecomboBoxEdit.Text}", ViewType.Line);
                             series.ArgumentDataMember = "ttimen";
                             series.ValueDataMembers.AddRange(new string[] { "kw" });
-                            series.CrosshairLabelPattern = "{S} {V:.##} kW";
-                            series.LabelsVisibility = DevExpress.Utils.DefaultBoolean.True;
+                            series.CrosshairLabelPattern = "{S} \r時間 : {A:yyyy-MM-dd HH:mm}\r{V:0.##} kW";
+                            series.LabelsVisibility = DevExpress.Utils.DefaultBoolean.False;
                             chartControl.Series.Add(series);
                             if (chartControl.DataSource != null && chartControl.Series.Count > 0)
                             {
@@ -111,7 +111,7 @@ namespace ChargingPileSystem.Views.Report
                                 }
                                 chartControl.CrosshairOptions.ShowArgumentLabels = false;//是否顯示Y軸垂直線
                                 chartControl.CrosshairOptions.ShowArgumentLine = false;//是否顯示Y軸垂直線
-                                chartControl.CrosshairOptions.ShowCrosshairLabels = false;//是否顯示Y軸垂直線
+                                //chartControl.CrosshairOptions.ShowCrosshairLabels = false;//是否顯示Y軸垂直線
                             }
                             #endregion
                         }
@@ -128,13 +128,13 @@ namespace ChargingPileSystem.Views.Report
                             #region 報表
                             for (int i = 0; i < gridView1.Columns.Count; i++)
                             {
-                                if (gridView1.Columns[i].Name == "ttimen")
+                                if (gridView1.Columns[i].FieldName == "ttimen")
                                 {
                                     gridView1.Columns[i].Caption = "時間";
                                     gridView1.Columns[i].DisplayFormat.FormatString = "yyyy/MM/dd";
                                     gridView1.Columns[i].BestFit();
                                 }
-                                else if (gridView1.Columns[i].Name == "KwhTotal")
+                                else if (gridView1.Columns[i].FieldName == "KwhTotal")
                                 {
                                     gridView1.Columns[i].Caption = "累積用電";
                                     gridView1.Columns[i].BestFit();
@@ -149,8 +149,8 @@ namespace ChargingPileSystem.Views.Report
                             Series series = new Series($"{SearchDevicecomboBoxEdit.Text}", ViewType.Bar);
                             series.ArgumentDataMember = "ttimen";
                             series.ValueDataMembers.AddRange(new string[] { "KwhTotal" });
-                            series.CrosshairLabelPattern = "{S} {V:.##} kWh";
-                            series.LabelsVisibility = DevExpress.Utils.DefaultBoolean.True;
+                            series.CrosshairLabelPattern = "{S} \r時間 : {A:yyyy-MM-dd HH:mm}\r{V:0.##} kWh";
+                            series.LabelsVisibility = DevExpress.Utils.DefaultBoolean.False;
                             chartControl.Series.Add(series);
                             if (chartControl.DataSource != null && chartControl.Series.Count > 0)
                             {
@@ -165,7 +165,7 @@ namespace ChargingPileSystem.Views.Report
                                 }
                                 chartControl.CrosshairOptions.ShowArgumentLabels = false;//是否顯示Y軸垂直線
                                 chartControl.CrosshairOptions.ShowArgumentLine = false;//是否顯示Y軸垂直線
-                                chartControl.CrosshairOptions.ShowCrosshairLabels = false;//是否顯示Y軸垂直線
+                                //chartControl.CrosshairOptions.ShowCrosshairLabels = false;//是否顯示Y軸垂直線
                             }
                             #endregion
                         }
@@ -185,12 +185,12 @@ namespace ChargingPileSystem.Views.Report
                     {
                         case ReportSearchEnumType.kW:
                             {
-                                gridControl.ExportToXlsx($"{SaveFile.FileName}-即時用電.Xlsx");
+                                gridControl.ExportToXlsx($"{SaveFile.FileName}");
                             }
                             break;
                         case ReportSearchEnumType.kWh:
                             {
-                                gridControl.ExportToXlsx($"{SaveFile.FileName}-累積用電.Xlsx");
+                                gridControl.ExportToXlsx($"{SaveFile.FileName}");
                             }
                             break;
                     }

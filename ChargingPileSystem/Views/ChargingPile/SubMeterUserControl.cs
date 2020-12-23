@@ -1,4 +1,5 @@
-﻿using ChargingPileSystem.EF_Modules;
+﻿using ChargingPileSystem.EF_Module;
+using ChargingPileSystem.EF_Modules;
 using ChargingPileSystem.Enums;
 using ChargingPileSystem.Methods;
 using ChargingPileSystem.Protocols.ElectricMeter;
@@ -29,9 +30,10 @@ namespace ChargingPileSystem.Views.ChargingPile
         /// </summary>
         private PhaseEnumType PhaseEnumType { get; set; }
 
-        public SubMeterUserControl(ElectricConfig electricConfig, SqlMethod sqlMethod, Form1 form1)
+        public SubMeterUserControl(ElectricConfig electricConfig, SqlMethod sqlMethod, Form1 form1, List<GatewayConfig> gatewayConfigs)
         {
             InitializeComponent();
+            GatewayConfigs = gatewayConfigs;
             Form1 = form1;
             groupControl.CustomHeaderButtons[0].Properties.Image = imageCollection1.Images["aligncenter"];
             ValueFont = NowkWlabelControl.Font;//即時用電、本日累積用電、昨日累積用電、總累積用電 字型大小一樣
@@ -143,11 +145,12 @@ namespace ChargingPileSystem.Views.ChargingPile
                 Form1.FlyoutFlag = true;
                 PanelControl panelControl = new PanelControl()
                 {
-                    Size = new Size(359, 118)
+                    Size = new Size(359, 210)
                 };
                 Form1.flyout = new FlyoutDialog(Form1, panelControl);
                 Form1.flyout.Properties.Style = FlyoutStyle.Popup;
-                DeviceNameSettingUserControl systemSettingUserControl = new DeviceNameSettingUserControl(ElectricConfig.DeviceName, ElectricConfig.GatewayIndex, ElectricConfig.DeviceIndex) { Form1 = Form1, SqlMethod = SqlMethod };
+                var GatewayConfig = GatewayConfigs.Where(g => g.GatewayIndex == ElectricConfig.GatewayIndex).Single();
+                DeviceNameSettingUserControl systemSettingUserControl = new DeviceNameSettingUserControl(GatewayConfig.GatewayName, ElectricConfig.DeviceID,ElectricConfig.DeviceName, ElectricConfig.GatewayIndex, ElectricConfig.DeviceIndex) { Form1 = Form1, SqlMethod = SqlMethod };
                 systemSettingUserControl.Parent = panelControl;
                 Form1.flyout.Show();
             }

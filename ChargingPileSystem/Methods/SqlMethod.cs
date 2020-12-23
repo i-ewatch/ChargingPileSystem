@@ -250,7 +250,7 @@ namespace ChargingPileSystem.Methods
                         {
                             using (var conn = new SqlConnection(scsb.ConnectionString))
                             {
-                                electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime = StartTime + "000000", EndTime = EndTime + "999999", GatewayIndex, DeviceIndex }).ToList();
+                                electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime , EndTime , GatewayIndex, DeviceIndex }).ToList();
                             }
                         }
                         break;
@@ -258,7 +258,7 @@ namespace ChargingPileSystem.Methods
                         {
                             using (var conn = new MySqlConnection(myscbs.ConnectionString))
                             {
-                                electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime = StartTime + "000000", EndTime = EndTime + "999999", GatewayIndex, DeviceIndex }).ToList();
+                                electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime, EndTime , GatewayIndex, DeviceIndex }).ToList();
                             }
                         }
                         break;
@@ -332,6 +332,18 @@ namespace ChargingPileSystem.Methods
             {
                 List<ElectricTotalPrice> electricTotalPrices = null;
                 string sql = "SELECT * FROM ElectricTotalPrice WHERE ttime >= @StartTime AND ttime <= @EndTime AND GatewayIndex = @GatewayIndex AND DeviceIndex = @DeviceIndex ";
+                string Monthsql = "SELECT MAX(ttime) AS ttime," +
+                                    "MAX(ttimen) AS ttimen," +
+                                    "MAX(GatewayIndex) AS GatewayIndex," +
+                                    "MAX(DeviceIndex) AS DeviceIndex," +
+                                    "MAX(KwhStart1) AS KwhStart1," +
+                                    "MAX(KwhEnd1) AS KwhEnd1," +
+                                    "MAX(KwhStart2) AS KwhStart2," +
+                                    "MAX(KwhEnd2) AS KwhEnd2, " +
+                                    "SUM(KwhTotal) AS KwhTotal," +
+                                    "MAX(UnitPrice) AS UnitPrice, " +
+                                    "SUM(Price) AS Pricek " +
+                                    "FROM ElectricTotalPrice WHERE ttime LIKE @StartTime AND GatewayIndex = @GatewayIndex AND DeviceIndex = @DeviceIndex ";
                 string totalsql = "SELECT MAX(ttime) AS ttime," +
                                     "MAX(ttimen) AS ttimen," +
                                     "MAX(GatewayIndex) AS GatewayIndex," +
@@ -341,6 +353,7 @@ namespace ChargingPileSystem.Methods
                                     "MAX(KwhStart2) AS KwhStart2," +
                                     "MAX(KwhEnd2) AS KwhEnd2, " +
                                     "SUM(KwhTotal) AS KwhTotal," +
+                                    "MAX(UnitPrice) AS UnitPrice, " +
                                     "SUM(Price) AS Pricek " +
                                     "FROM ElectricTotalPrice WHERE  GatewayIndex = @GatewayIndex AND DeviceIndex = @DeviceIndex ";
                 SearchEnumType = (SearchEnumType)searchEnumType;
@@ -355,19 +368,19 @@ namespace ChargingPileSystem.Methods
                                     case SearchEnumType.NowDay:
                                         {
                                             searchenumtype = "本日累積用電";
-                                            electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime = DateTime.Now.ToString("yyyyMMdd000000"), EndTime = DateTime.Now.ToString("yyyyMMdd999999"), GatewayIndex, DeviceIndex }).ToList();
+                                            electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime = DateTime.Now.ToString("yyyyMMdd"), EndTime = DateTime.Now.ToString("yyyyMMdd"), GatewayIndex, DeviceIndex }).ToList();
                                         }
                                         break;
                                     case SearchEnumType.AfterDay:
                                         {
                                             searchenumtype = "昨日累積用電";
-                                            electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime = DateTime.Now.AddDays(-1).ToString("yyyyMMdd000000"), EndTime = DateTime.Now.AddDays(-1).ToString("yyyyMMdd999999"), GatewayIndex, DeviceIndex }).ToList();
+                                            electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime = DateTime.Now.AddDays(-1).ToString("yyyyMMdd"), EndTime = DateTime.Now.AddDays(-1).ToString("yyyyMMdd"), GatewayIndex, DeviceIndex }).ToList();
                                         }
                                         break;
                                     case SearchEnumType.NowMonth:
                                         {
                                             searchenumtype = "本月累積用電";
-                                            electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime = DateTime.Now.ToString("yyyyMM01000000"), EndTime = DateTime.Now.ToString("yyyyMM31999999"), GatewayIndex, DeviceIndex }).ToList();
+                                            electricTotalPrices = conn.Query<ElectricTotalPrice>(Monthsql, new { StartTime = DateTime.Now.ToString("yyyyMM")+"%", GatewayIndex, DeviceIndex }).ToList();
                                         }
                                         break;
                                     case SearchEnumType.Total:
@@ -389,19 +402,19 @@ namespace ChargingPileSystem.Methods
                                     case SearchEnumType.NowDay:
                                         {
                                             searchenumtype = "本日累積用電";
-                                            electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime = DateTime.Now.ToString("yyyyMMdd000000"), EndTime = DateTime.Now.ToString("yyyyMMdd999999"), GatewayIndex, DeviceIndex }).ToList();
+                                            electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime = DateTime.Now.ToString("yyyyMMdd"), EndTime = DateTime.Now.ToString("yyyyMMdd"), GatewayIndex, DeviceIndex }).ToList();
                                         }
                                         break;
                                     case SearchEnumType.AfterDay:
                                         {
                                             searchenumtype = "昨日累積用電";
-                                            electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime = DateTime.Now.AddDays(-1).ToString("yyyyMMdd000000"), EndTime = DateTime.Now.AddDays(-1).ToString("yyyyMMdd999999"), GatewayIndex, DeviceIndex }).ToList();
+                                            electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime = DateTime.Now.AddDays(-1).ToString("yyyyMMdd"), EndTime = DateTime.Now.AddDays(-1).ToString("yyyyMMdd"), GatewayIndex, DeviceIndex }).ToList();
                                         }
                                         break;
                                     case SearchEnumType.NowMonth:
                                         {
                                             searchenumtype = "本月累積用電";
-                                            electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime = DateTime.Now.ToString("yyyyMM01000000"), EndTime = DateTime.Now.ToString("yyyyMM31999999"), GatewayIndex, DeviceIndex }).ToList();
+                                            electricTotalPrices = conn.Query<ElectricTotalPrice>(Monthsql, new { StartTime = DateTime.Now.ToString("yyyyMM")+"%", GatewayIndex, DeviceIndex }).ToList();
                                         }
                                         break;
                                     case SearchEnumType.Total:
@@ -448,6 +461,7 @@ namespace ChargingPileSystem.Methods
                              "MAX(KwhStart2) AS KwhStart2," +
                              "MAX(KwhEnd2) AS KwhEnd2, " +
                              "SUM(KwhTotal) AS KwhTotal, " +
+                             "MAX(UnitPrice) AS UnitPrice, " +
                              "SUM(Price) AS Price " +
                              "FROM ElectricTotalPrice WHERE ttime >= @StartTime AND ttime <= @EndTime AND GatewayIndex = @GatewayIndex AND DeviceIndex = @DeviceIndex ";
                 switch (SQLEnumType)
@@ -456,7 +470,7 @@ namespace ChargingPileSystem.Methods
                         {
                             using (var conn = new SqlConnection(scsb.ConnectionString))
                             {
-                                electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime = StartTime + "000000", EndTime = EndTime + "999999", GatewayIndex, DeviceIndex }).ToList();
+                                electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new {StartTime,EndTime, GatewayIndex, DeviceIndex }).ToList();
                             }
                         }
                         break;
@@ -464,7 +478,7 @@ namespace ChargingPileSystem.Methods
                         {
                             using (var conn = new MySqlConnection(myscbs.ConnectionString))
                             {
-                                electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime = StartTime + "000000", EndTime = EndTime + "999999", GatewayIndex, DeviceIndex }).ToList();
+                                electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new {StartTime,  EndTime, GatewayIndex, DeviceIndex }).ToList();
                             }
                         }
                         break;
@@ -1049,8 +1063,6 @@ namespace ChargingPileSystem.Methods
 
         }
         #endregion
-
-
 
         #region 更新溫溼度感測器 ForWeb與Log
         /// <summary>

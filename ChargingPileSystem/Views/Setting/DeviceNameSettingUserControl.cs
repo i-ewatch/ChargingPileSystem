@@ -22,9 +22,11 @@ namespace ChargingPileSystem.Views.Setting
         /// 設備編號
         /// </summary>
         private int DeviceIndex { get; set; }
-        public DeviceNameSettingUserControl(string OldDeviceName, int gatewayIndex, int deviceIndex)
+        public DeviceNameSettingUserControl(string GatewayName,int DeviceID,string OldDeviceName, int gatewayIndex, int deviceIndex)
         {
             InitializeComponent();
+            GatewayNamelabelControl.Text=GatewayName;
+            DeviceIDlabelControl.Text = DeviceID.ToString();
             OldDeviceNamelabelControl.Text = OldDeviceName;
             GatewayIndex = gatewayIndex;
             DeviceIndex = deviceIndex;

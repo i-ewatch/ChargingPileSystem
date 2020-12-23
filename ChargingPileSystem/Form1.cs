@@ -251,7 +251,7 @@ namespace ChargingPileSystem
                     {
                         case ButtonItemEnumType.Home:
                             {
-                                ChargingPileView chargingPileView = new ChargingPileView(ElectricConfigs, SqlMethod,this) { SqlMethod = SqlMethod, Dock = DockStyle.Fill };
+                                ChargingPileView chargingPileView = new ChargingPileView(ElectricConfigs, SqlMethod, this, GatewayConfigs) { SqlMethod = SqlMethod, Dock = DockStyle.Fill };
                                 field4UserControls.Add(chargingPileView);
                                 NavigationFrame.AddPage(chargingPileView);
                             }
@@ -354,7 +354,7 @@ namespace ChargingPileSystem
                     okButton.Appearance.FontSizeDelta = 12;
                     okButton.DialogResult = DialogResult.OK;
                     okButton.Parent = control;
-                    if (FlyoutDialog.Show(FindForm(), control) == DialogResult.OK && (string.Compare(textEdit.Text, $"{BankAccountSetting.SystemPassword}", true) == 0|| string.Compare(textEdit.Text, $"d001007", true) == 0))
+                    if (FlyoutDialog.Show(FindForm(), control) == DialogResult.OK && (string.Compare(textEdit.Text, $"{BankAccountSetting.SystemPassword}", true) == 0 || string.Compare(textEdit.Text, $"d001007", true) == 0))
                     {
                         UserbarButtonItem.ImageOptions.Image = imageCollection16x16.Images["UserConnect"];
                         AdministraturFlag = true;
@@ -446,6 +446,7 @@ namespace ChargingPileSystem
         private void timer1_Tick(object sender, EventArgs e)
         {
             #region 自動登出
+            PageIndex = NavigationFrame.SelectedPageIndex;
             TimeSpan timeSpan = DateTime.Now.Subtract(UserTime);
             if (timeSpan.TotalSeconds > 600 && AdministraturFlag)
             {
@@ -480,6 +481,12 @@ namespace ChargingPileSystem
             SqlComponent.MyWorkState = false;
             timer1.Enabled = false;
             this.Dispose();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Location = new Point(0, 0);
+            Size = new Size(1920, 1080);
         }
     }
 }

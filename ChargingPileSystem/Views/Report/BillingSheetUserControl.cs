@@ -21,6 +21,7 @@ namespace ChargingPileSystem.Views.Report
         public BillingSheetUserControl(List<ElectricConfig> electricConfigs)
         {
             InitializeComponent();
+            StartdateEdit.Properties.ContextImageOptions.Image = imageCollection1.Images["calendar"];
             Create_CheckedListBoxItem(electricConfigs);
         }
         public BankAccountSetting BankaccountSetting { get; set; }
