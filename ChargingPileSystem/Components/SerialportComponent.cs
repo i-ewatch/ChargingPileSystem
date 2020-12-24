@@ -39,13 +39,13 @@ namespace ChargingPileSystem.Components
                     {
                         case ElectricEnumType.PA310:
                             {
-                                PA310Protocol protocol = new PA310Protocol() {  GatewayIndex = item.GatewayIndex, DeviceIndex = item.DeviceIndex, ID = (byte)item.DeviceID, LoopEnumType = item.LoopEnumType, PhaseAngleEnumType = item.PhaseAngleEnumType, PhaseEnumType = item.PhaseEnumType, ElectricEnumType = item.ElectricEnumType };
+                                PA310Protocol protocol = new PA310Protocol() { GatewayIndex = item.GatewayIndex, DeviceIndex = item.DeviceIndex, ID = (byte)item.DeviceID, LoopEnumType = item.LoopEnumType, PhaseAngleEnumType = item.PhaseAngleEnumType, PhaseEnumType = item.PhaseEnumType, ElectricEnumType = item.ElectricEnumType };
                                 AbsProtocols.Add(protocol);
                             }
                             break;
                         case ElectricEnumType.HC660:
                             {
-                                HC6600Protocol protocol = new HC6600Protocol() {  GatewayIndex = item.GatewayIndex, DeviceIndex = item.DeviceIndex, ID = (byte)item.DeviceID, LoopEnumType = item.LoopEnumType, PhaseAngleEnumType = item.PhaseAngleEnumType, PhaseEnumType = item.PhaseEnumType, ElectricEnumType = item.ElectricEnumType };
+                                HC6600Protocol protocol = new HC6600Protocol() { GatewayIndex = item.GatewayIndex, DeviceIndex = item.DeviceIndex, ID = (byte)item.DeviceID, LoopEnumType = item.LoopEnumType, PhaseAngleEnumType = item.PhaseAngleEnumType, PhaseEnumType = item.PhaseEnumType, ElectricEnumType = item.ElectricEnumType };
                                 AbsProtocols.Add(protocol);
                             }
                             break;
@@ -57,13 +57,25 @@ namespace ChargingPileSystem.Components
                             break;
                         case ElectricEnumType.PA60:
                             {
-                                PA60Protocol protocol = new PA60Protocol() {  GatewayIndex = item.GatewayIndex, DeviceIndex = item.DeviceIndex, ID = (byte)item.DeviceID, LoopEnumType = item.LoopEnumType, PhaseAngleEnumType = item.PhaseAngleEnumType, PhaseEnumType = item.PhaseEnumType, ElectricEnumType = item.ElectricEnumType };
+                                PA60Protocol protocol = new PA60Protocol() { GatewayIndex = item.GatewayIndex, DeviceIndex = item.DeviceIndex, ID = (byte)item.DeviceID, LoopEnumType = item.LoopEnumType, PhaseAngleEnumType = item.PhaseAngleEnumType, PhaseEnumType = item.PhaseEnumType, ElectricEnumType = item.ElectricEnumType };
                                 AbsProtocols.Add(protocol);
                             }
                             break;
                         case ElectricEnumType.ABBM2M:
                             {
-                                ABBM2MProtocol protocol = new ABBM2MProtocol() {  GatewayIndex = item.GatewayIndex, DeviceIndex = item.DeviceIndex, ID = (byte)item.DeviceID, LoopEnumType = item.LoopEnumType, PhaseAngleEnumType = item.PhaseAngleEnumType, PhaseEnumType = item.PhaseEnumType, ElectricEnumType = item.ElectricEnumType };
+                                ABBM2MProtocol protocol = new ABBM2MProtocol() { GatewayIndex = item.GatewayIndex, DeviceIndex = item.DeviceIndex, ID = (byte)item.DeviceID, LoopEnumType = item.LoopEnumType, PhaseAngleEnumType = item.PhaseAngleEnumType, PhaseEnumType = item.PhaseEnumType, ElectricEnumType = item.ElectricEnumType };
+                                AbsProtocols.Add(protocol);
+                            }
+                            break;
+                        case ElectricEnumType.PM200:
+                            {
+                                PM200Protocol protocol = new PM200Protocol() { GatewayIndex = item.GatewayIndex, DeviceIndex = item.DeviceIndex, ID = (byte)item.DeviceID, LoopEnumType = item.LoopEnumType, PhaseAngleEnumType = item.PhaseAngleEnumType, PhaseEnumType = item.PhaseEnumType, ElectricEnumType = item.ElectricEnumType };
+                                AbsProtocols.Add(protocol);
+                            }
+                            break;
+                        case ElectricEnumType.TWCCPM4:
+                            {
+                                TWCCPM4Protocol protocol = new TWCCPM4Protocol() { GatewayIndex = item.GatewayIndex, DeviceIndex = item.DeviceIndex, ID = (byte)item.DeviceID, LoopEnumType = item.LoopEnumType, PhaseAngleEnumType = item.PhaseAngleEnumType, PhaseEnumType = item.PhaseEnumType, ElectricEnumType = item.ElectricEnumType };
                                 AbsProtocols.Add(protocol);
                             }
                             break;

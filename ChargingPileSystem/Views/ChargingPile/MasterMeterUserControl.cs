@@ -211,6 +211,34 @@ namespace ChargingPileSystem.Views.ChargingPile
                                 kWhlabelControl.Text = protocol.kWh.ToString("F2");
                             }
                             break;
+                        case ElectricEnumType.PM200:
+                            {
+                                PM200Protocol protocol = (PM200Protocol)Data[0];
+                                RSvlabelControl.Text = protocol.RSv.ToString("F1");
+                                STvlabelControl.Text = protocol.STv.ToString("F1");
+                                TRvlabelControl.Text = protocol.TRv.ToString("F1");
+                                RalabelControl.Text = protocol.RA.ToString("F1");
+                                SalabelControl.Text = protocol.SA.ToString("F1");
+                                TalabelControl.Text = protocol.TA.ToString("F1");
+                                PFlabelControl.Text = protocol.PF.ToString("F2");
+                                kWlabelControl.Text = protocol.kW.ToString("F2");
+                                kWhlabelControl.Text = protocol.kWh.ToString("F2");
+                            }
+                            break;
+                        case ElectricEnumType.TWCCPM4:
+                            {
+                                TWCCPM4Protocol protocol = (TWCCPM4Protocol)Data[0];
+                                RSvlabelControl.Text = protocol.RSv.ToString("F1");
+                                STvlabelControl.Text = protocol.STv.ToString("F1");
+                                TRvlabelControl.Text = protocol.TRv.ToString("F1");
+                                RalabelControl.Text = protocol.RA.ToString("F1");
+                                SalabelControl.Text = protocol.SA.ToString("F1");
+                                TalabelControl.Text = protocol.TA.ToString("F1");
+                                PFlabelControl.Text = protocol.PF.ToString("F2");
+                                kWlabelControl.Text = protocol.kW.ToString("F2");
+                                kWhlabelControl.Text = protocol.kWh.ToString("F2");
+                            }
+                            break;
                     }
                 }
                 #endregion

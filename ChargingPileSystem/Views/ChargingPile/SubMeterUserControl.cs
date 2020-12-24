@@ -114,6 +114,22 @@ namespace ChargingPileSystem.Views.ChargingPile
                                 }
                             }
                             break;
+                        case ElectricEnumType.PM200:
+                            {
+                                {
+                                    PM200Protocol protocol = (PM200Protocol)Data[0];
+                                    NowkWlabelControl.Text = protocol.kW.ToString("F2");
+                                }
+                            }
+                            break;
+                        case ElectricEnumType.TWCCPM4:
+                            {
+                                {
+                                    TWCCPM4Protocol protocol = (TWCCPM4Protocol)Data[0];
+                                    NowkWlabelControl.Text = protocol.kW.ToString("F2");
+                                }
+                            }
+                            break;
                     }
                 }
                 #endregion

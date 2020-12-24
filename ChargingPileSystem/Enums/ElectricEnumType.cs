@@ -27,6 +27,14 @@ namespace ChargingPileSystem.Enums
         /// <summary>
         /// ABBM2M電表
         /// </summary>
-        ABBM2M
+        ABBM2M,
+        /// <summary>
+        /// PM200
+        /// </summary>
+        PM200,
+        /// <summary>
+        /// TWC-CPM4
+        /// </summary>
+        TWCCPM4
     }
 }
