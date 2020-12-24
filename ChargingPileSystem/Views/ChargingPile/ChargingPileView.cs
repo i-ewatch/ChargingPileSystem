@@ -47,9 +47,18 @@ namespace ChargingPileSystem.Views.ChargingPile
                 {
                     if (item.TotalMeterFlag)//總電表
                     {
-                        MasterMeterUserControl masterMeter = new MasterMeterUserControl(item, sqlMethod, form1, gatewayConfigs) { SqlMethod = sqlMethod };
-                        MasterMeters.Add(masterMeter);
-                        MasterMetenavigationFrame.AddPage(masterMeter);
+                        if (Form1.ConnectionFlag)
+                        {
+                            MasterMeterUserControl masterMeter = new MasterMeterUserControl(item, sqlMethod, form1, gatewayConfigs) { SqlMethod = sqlMethod };
+                            MasterMeters.Add(masterMeter);
+                            MasterMetenavigationFrame.AddPage(masterMeter);
+                        }
+                        else
+                        {
+                            MasterMeterUserControl masterMeter = new MasterMeterUserControl(item, sqlMethod, form1, gatewayConfigs) { SqlMethod = sqlMethod ,ElectricConfigs = electricConfigs };
+                            MasterMeters.Add(masterMeter);
+                            MasterMetenavigationFrame.AddPage(masterMeter);
+                        }
                     }
                 }
                 ChargingPileUserControl = new ChargingPileUserControl(electricConfigs, sqlMethod, form1, gatewayConfigs) { SqlMethod = sqlMethod, GatewayConfigs = GatewayConfigs };

@@ -16,6 +16,10 @@ namespace ChargingPileSystem.Views
     public class Field4UserControl : XtraUserControl
     {
         /// <summary>
+        /// 亂數產生
+        /// </summary>
+        public Random rnd { get; set; } = new Random();
+        /// <summary>
         /// 主畫面物件
         /// </summary>
         public Form1 Form1 { get; set; }

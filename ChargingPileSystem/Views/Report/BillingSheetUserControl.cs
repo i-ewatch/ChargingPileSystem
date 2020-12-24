@@ -79,10 +79,20 @@ namespace ChargingPileSystem.Views.Report
                 {
                     ElectricConfig electric = (ElectricConfig)item.Tag;
                     RoomName.Add(electric.DeviceName);
-                    var nowbilldata = SqlMethod.Search_ElectricTotalPrice_Billing(NowStartTime, NowEndTime, electric.GatewayIndex, electric.DeviceIndex);
-                    NowbillData.Add(nowbilldata);
-                    var afterbilldata = SqlMethod.Search_ElectricTotalPrice_Billing(AfterStartTime, AfterEndTime, electric.GatewayIndex, electric.DeviceIndex);
-                    AfterbillData.Add(afterbilldata);
+                    if (Form1.ConnectionFlag)
+                    {
+                        var nowbilldata = SqlMethod.Search_ElectricTotalPrice_Billing(NowStartTime, NowEndTime, electric.GatewayIndex, electric.DeviceIndex);
+                        NowbillData.Add(nowbilldata);
+                        var afterbilldata = SqlMethod.Search_ElectricTotalPrice_Billing(AfterStartTime, AfterEndTime, electric.GatewayIndex, electric.DeviceIndex);
+                        AfterbillData.Add(afterbilldata);
+                    }
+                    else
+                    {
+                        var nowbilldata = new ElectricTotalPrice() { Price = rnd.Next(500, 1000), KwhTotal = rnd.Next(100, 200) };
+                        NowbillData.Add(nowbilldata);
+                        var afterbilldata = new ElectricTotalPrice() { Price = rnd.Next(500, 1000), KwhTotal = rnd.Next(100, 200) };
+                        AfterbillData.Add(afterbilldata);
+                    }
                     RoomCheck++;
                 }
             }

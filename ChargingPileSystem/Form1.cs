@@ -79,6 +79,10 @@ namespace ChargingPileSystem
         /// 銀行與系統密碼資訊
         /// </summary>
         public BankAccountSetting BankAccountSetting { get; set; }
+        /// <summary>
+        /// Demo資訊
+        /// </summary>
+        public DemoSetting DemoSetting { get; set; }
         #endregion
         #region Controls
         /// <summary>
@@ -93,6 +97,10 @@ namespace ChargingPileSystem
         private SqlMethod SqlMethod { get; set; }
         #endregion
         #region 通訊
+        /// <summary>
+        /// 通訊旗標
+        /// </summary>
+        public bool ConnectionFlag { get; set; } = true;
         /// <summary>
         /// 通訊類型
         /// </summary>
@@ -177,7 +185,9 @@ namespace ChargingPileSystem
             LogoSetting = InitialMethod.LogoLoad();
             SqlDBSetting = InitialMethod.SqlDBLoad();
             BankAccountSetting = InitialMethod.BankAccountLoad();
+            DemoSetting = InitialMethod.DemoLoad();
             #endregion
+            ConnectionFlag = DemoSetting.ConnectionFlag;
 
             #region 載入Logo圖片
             if (LogoSetting != null)
@@ -205,38 +215,59 @@ namespace ChargingPileSystem
             #endregion
 
             #region 資料庫方法載入
-            if (SqlDBSetting != null)
+            if (SqlDBSetting != null && ConnectionFlag)
             {
                 SqlMethod = new SqlMethod() { setting = SqlDBSetting, BankAccountSetting = BankAccountSetting };
                 SqlMethod.SQLConnect();
                 GatewayConfigs = SqlMethod.Search_GatewayConfig();//通道資訊
                 ElectricConfigs = SqlMethod.Search_Electricconfig();//電表設備資訊
                 SqlComponent = new SqlComponent() { SqlMethod = SqlMethod, BankAccountSetting = BankAccountSetting };
-                SqlComponent.MyWorkState = true;
+                SqlComponent.MyWorkState = ConnectionFlag;
+            }
+            else if (!ConnectionFlag)
+            {
+                GatewayConfig gateway = new GatewayConfig() { GatewayIndex = 0, GatewayName = "通道1" };
+                GatewayConfigs.Add(gateway);
+                for (int i = 0; i < 20; i++)
+                {
+                    if (i == 0)
+                    {
+                        ElectricConfig electric = new ElectricConfig() { TotalMeterFlag = true, DeviceName = $"電表{i + 1}", GatewayIndex = 0, DeviceIndex = i, DeviceID = i + 1 };
+                        ElectricConfigs.Add(electric);
+                    }
+                    else
+                    {
+                        ElectricConfig electric = new ElectricConfig() { TotalMeterFlag = false, DeviceName = $"電表{i + 1}", GatewayIndex = 0, DeviceIndex = i, DeviceID = i + 1 };
+                        ElectricConfigs.Add(electric);
+                    }
+                }
             }
             #endregion
 
             #region 通訊
-            foreach (var item in GatewayConfigs)
+            if (ConnectionFlag)
             {
-                GatewayEnumType = (GatewayEnumType)item.GatewayEnumType;
-                var electricconfigs = ElectricConfigs.Where(g => g.GatewayIndex == item.GatewayIndex).ToList();
-                switch (GatewayEnumType)
+                foreach (var item in GatewayConfigs)
                 {
-                    case GatewayEnumType.ModbusRTU:
-                        {
-                            SerialportComponent component = new SerialportComponent() { BankAccountSetting = BankAccountSetting, Gatewayconfig = item, ElectricConfigs = electricconfigs };
-                            component.MyWorkState = true;
-                            ModbusComponents.Add(component);
-                        }
-                        break;
-                    case GatewayEnumType.ModbusTCP:
-                        {
-                            TcpComponent component = new TcpComponent() { BankAccountSetting = BankAccountSetting, Gatewayconfig = item, ElectricConfigs = electricconfigs };
-                            component.MyWorkState = true;
-                            ModbusComponents.Add(component);
-                        }
-                        break;
+                    GatewayEnumType = (GatewayEnumType)item.GatewayEnumType;
+                    var electricconfigs = ElectricConfigs.Where(g => g.GatewayIndex == item.GatewayIndex).ToList();
+                    switch (GatewayEnumType)
+                    {
+                        case GatewayEnumType.ModbusRTU:
+                            {
+                                SerialportComponent component = new SerialportComponent() { BankAccountSetting = BankAccountSetting, Gatewayconfig = item, ElectricConfigs = electricconfigs };
+                                component.MyWorkState = ConnectionFlag;
+                                ModbusComponents.Add(component);
+                            }
+                            break;
+                        case GatewayEnumType.ModbusTCP:
+                            {
+                                TcpComponent component = new TcpComponent() { BankAccountSetting = BankAccountSetting, Gatewayconfig = item, ElectricConfigs = electricconfigs };
+                                component.MyWorkState = ConnectionFlag;
+                                ModbusComponents.Add(component);
+                            }
+                            break;
+                    }
                 }
             }
             #endregion
@@ -453,16 +484,19 @@ namespace ChargingPileSystem
                 UserbarButtonItem_ItemClick(null, null);
             }
             #endregion
-            ElectricConfigs = SqlMethod.Search_Electricconfig();//電表設備資訊
-            AbsProtocols = new List<AbsProtocol>();
-            foreach (var item in ModbusComponents)
+            if (ConnectionFlag)
             {
-                foreach (var dataitem in item.AbsProtocols)
+                ElectricConfigs = SqlMethod.Search_Electricconfig();//電表設備資訊
+                AbsProtocols = new List<AbsProtocol>();
+                foreach (var item in ModbusComponents)
                 {
-                    AbsProtocols.Add(dataitem);
+                    foreach (var dataitem in item.AbsProtocols)
+                    {
+                        AbsProtocols.Add(dataitem);
+                    }
                 }
+                SqlComponent.AbsProtocols = AbsProtocols;
             }
-            SqlComponent.AbsProtocols = AbsProtocols;
             if (field4UserControls.Count > NavigationFrame.SelectedPageIndex)
             {
                 field4UserControls[NavigationFrame.SelectedPageIndex].AbsProtocols = AbsProtocols;

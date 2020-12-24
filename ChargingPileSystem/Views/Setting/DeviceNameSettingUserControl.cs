@@ -22,10 +22,10 @@ namespace ChargingPileSystem.Views.Setting
         /// 設備編號
         /// </summary>
         private int DeviceIndex { get; set; }
-        public DeviceNameSettingUserControl(string GatewayName,int DeviceID,string OldDeviceName, int gatewayIndex, int deviceIndex)
+        public DeviceNameSettingUserControl(string GatewayName, int DeviceID, string OldDeviceName, int gatewayIndex, int deviceIndex)
         {
             InitializeComponent();
-            GatewayNamelabelControl.Text=GatewayName;
+            GatewayNamelabelControl.Text = GatewayName;
             DeviceIDlabelControl.Text = DeviceID.ToString();
             OldDeviceNamelabelControl.Text = OldDeviceName;
             GatewayIndex = gatewayIndex;
@@ -34,9 +34,25 @@ namespace ChargingPileSystem.Views.Setting
 
         private void SavesimpleButton_Click(object sender, EventArgs e)
         {
-            if (SqlMethod.Updata_ElectricConfig(NewDeviceNametextEdit.Text, GatewayIndex, DeviceIndex))
+            if (Form1.ConnectionFlag)
             {
-                ElectricConfigs = SqlMethod.Search_Electricconfig();
+                if (SqlMethod.Updata_ElectricConfig(NewDeviceNametextEdit.Text, GatewayIndex, DeviceIndex))
+                {
+                    ElectricConfigs = SqlMethod.Search_Electricconfig();
+                    Form1.billingSheetUserControl.Create_CheckedListBoxItem(ElectricConfigs);
+                    Form1.dataReportUserControl.DeviceItemRefresh(ElectricConfigs);
+                }
+            }
+            else
+            {
+                foreach (var item in ElectricConfigs)
+                {
+                    if (item.DeviceID == Convert.ToInt32(DeviceIDlabelControl.Text))
+                    {
+                        item.DeviceName = NewDeviceNametextEdit.Text;
+                        break;
+                    }
+                }
                 Form1.billingSheetUserControl.Create_CheckedListBoxItem(ElectricConfigs);
                 Form1.dataReportUserControl.DeviceItemRefresh(ElectricConfigs);
             }

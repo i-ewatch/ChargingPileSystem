@@ -211,5 +211,38 @@ namespace ChargingPileSystem.Methods
             File.WriteAllText(SettingPath, output);
         }
         #endregion
+
+        #region Demo資訊
+        public static DemoSetting DemoLoad()
+        {
+            DemoSetting setting = null;
+            if (!Directory.Exists($"{MyWorkPath}\\stf"))
+                Directory.CreateDirectory($"{MyWorkPath}\\stf");
+            string SettingPath = $"{MyWorkPath}\\stf\\Demo.json";
+            try
+            {
+                if (File.Exists(SettingPath))
+                {
+                    string json = File.ReadAllText(SettingPath, Encoding.UTF8);
+                    setting = JsonConvert.DeserializeObject<DemoSetting>(json);
+                }
+                else
+                {
+                    DemoSetting Setting = new DemoSetting()
+                    {
+                        ConnectionFlag = true
+                    };
+                    setting = Setting;
+                    string output = JsonConvert.SerializeObject(setting, Formatting.Indented, new JsonSerializerSettings());
+                    File.WriteAllText(SettingPath, output);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, " Demo資訊設定載入錯誤");
+            }
+            return setting;
+        }
+        #endregion
     }
 }

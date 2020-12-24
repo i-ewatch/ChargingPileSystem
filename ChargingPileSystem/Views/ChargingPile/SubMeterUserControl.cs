@@ -37,7 +37,7 @@ namespace ChargingPileSystem.Views.ChargingPile
             Form1 = form1;
             groupControl.CustomHeaderButtons[0].Properties.Image = imageCollection1.Images["aligncenter"];
             ValueFont = NowkWlabelControl.Font;//即時用電、本日累積用電、昨日累積用電、總累積用電 字型大小一樣
-            if (electricConfig != null)
+            if (electricConfig != null && Form1.ConnectionFlag)
             {
                 groupControl.Text = $"{electricConfig.DeviceName}";//電表名稱
                 var NowkWh = sqlMethod.Search_ElectricTotalPrice(0, electricConfig.GatewayIndex, electricConfig.DeviceIndex);//本日累積用電度
@@ -57,11 +57,21 @@ namespace ChargingPileSystem.Views.ChargingPile
                     TotalkWhlabelControl.Text = TotalkWh[0].KwhTotal.ToString("F1");
                 }
             }
+            else if (!Form1.ConnectionFlag)
+            {
+                groupControl.Text = $"{electricConfig.DeviceName}";//電表名稱
+                var NowkWh = rnd.Next(100, 300);//本日累積用電度
+                var AfterkWh = rnd.Next(100, 300);//昨日累積用電度
+                var TotalkWh = rnd.Next(10000, 30000);//總累積用電度
+                NowkWhlabelControl.Text = NowkWh.ToString();
+                AfterkWhlabelControl.Text = AfterkWh.ToString();
+                TotalkWhlabelControl.Text = TotalkWh.ToString();
+            }
             groupControl.CustomHeaderButtons[0].Properties.Enabled = false;
         }
         public override void TextChange()
         {
-            if (ElectricConfig != null)
+            if (ElectricConfig != null && Form1.ConnectionFlag)
             {
                 groupControl.CustomHeaderButtons[0].Properties.Enabled = Form1.AdministraturFlag;//更改名稱按鈕
                 #region 電表名稱
@@ -134,21 +144,35 @@ namespace ChargingPileSystem.Views.ChargingPile
                 }
                 #endregion
             }
-            var NowkWh = SqlMethod.Search_ElectricTotalPrice(0, ElectricConfig.GatewayIndex, ElectricConfig.DeviceIndex);//本日累積用電度
-            var AfterkWh = SqlMethod.Search_ElectricTotalPrice(1, ElectricConfig.GatewayIndex, ElectricConfig.DeviceIndex);//昨日累積用電度
-            var TotalkWh = SqlMethod.Search_ElectricTotalPrice(3, ElectricConfig.GatewayIndex, ElectricConfig.DeviceIndex);//總累積用電度
-            if (NowkWh.Count > 0)
+            else if (!Form1.ConnectionFlag)
             {
-                NowkWhlabelControl.Text = NowkWh[0].KwhTotal.ToString("F1");
+                groupControl.CustomHeaderButtons[0].Properties.Enabled = Form1.AdministraturFlag;//更改名稱按鈕
+                #region 電表名稱
+                if (groupControl.Text != $"{ElectricConfig.DeviceName}")
+                {
+                    groupControl.Text = $"{ElectricConfig.DeviceName}";
+                }
+                #endregion
+                NowkWlabelControl.Text = rnd.Next(100, 300).ToString();
             }
-            if (AfterkWh.Count > 0)
+            if (Form1.ConnectionFlag)
             {
-                AfterkWhlabelControl.Text = AfterkWh[0].KwhTotal.ToString("F1");
-            }
-            if (TotalkWh.Count > 0)
-            {
-                TotalkWhlabelControl.Appearance.Font = CalculateFontSize(TotalkWh[0].KwhTotal.ToString("F1"), TotalkWhlabelControl);
-                TotalkWhlabelControl.Text = TotalkWh[0].KwhTotal.ToString("F1");
+                var NowkWh = SqlMethod.Search_ElectricTotalPrice(0, ElectricConfig.GatewayIndex, ElectricConfig.DeviceIndex);//本日累積用電度
+                var AfterkWh = SqlMethod.Search_ElectricTotalPrice(1, ElectricConfig.GatewayIndex, ElectricConfig.DeviceIndex);//昨日累積用電度
+                var TotalkWh = SqlMethod.Search_ElectricTotalPrice(3, ElectricConfig.GatewayIndex, ElectricConfig.DeviceIndex);//總累積用電度
+                if (NowkWh.Count > 0)
+                {
+                    NowkWhlabelControl.Text = NowkWh[0].KwhTotal.ToString("F1");
+                }
+                if (AfterkWh.Count > 0)
+                {
+                    AfterkWhlabelControl.Text = AfterkWh[0].KwhTotal.ToString("F1");
+                }
+                if (TotalkWh.Count > 0)
+                {
+                    TotalkWhlabelControl.Appearance.Font = CalculateFontSize(TotalkWh[0].KwhTotal.ToString("F1"), TotalkWhlabelControl);
+                    TotalkWhlabelControl.Text = TotalkWh[0].KwhTotal.ToString("F1");
+                }
             }
         }
 
@@ -166,8 +190,16 @@ namespace ChargingPileSystem.Views.ChargingPile
                 Form1.flyout = new FlyoutDialog(Form1, panelControl);
                 Form1.flyout.Properties.Style = FlyoutStyle.Popup;
                 var GatewayConfig = GatewayConfigs.Where(g => g.GatewayIndex == ElectricConfig.GatewayIndex).Single();
-                DeviceNameSettingUserControl systemSettingUserControl = new DeviceNameSettingUserControl(GatewayConfig.GatewayName, ElectricConfig.DeviceID,ElectricConfig.DeviceName, ElectricConfig.GatewayIndex, ElectricConfig.DeviceIndex) { Form1 = Form1, SqlMethod = SqlMethod };
-                systemSettingUserControl.Parent = panelControl;
+                if (Form1.ConnectionFlag)
+                {
+                    DeviceNameSettingUserControl systemSettingUserControl = new DeviceNameSettingUserControl(GatewayConfig.GatewayName, ElectricConfig.DeviceID, ElectricConfig.DeviceName, ElectricConfig.GatewayIndex, ElectricConfig.DeviceIndex) { Form1 = Form1, SqlMethod = SqlMethod };
+                    systemSettingUserControl.Parent = panelControl;
+                }
+                else
+                {
+                    DeviceNameSettingUserControl systemSettingUserControl = new DeviceNameSettingUserControl(GatewayConfig.GatewayName, ElectricConfig.DeviceID, ElectricConfig.DeviceName, ElectricConfig.GatewayIndex, ElectricConfig.DeviceIndex) { Form1 = Form1, SqlMethod = SqlMethod ,ElectricConfigs = ElectricConfigs};
+                    systemSettingUserControl.Parent = panelControl;
+                }
                 Form1.flyout.Show();
             }
             else

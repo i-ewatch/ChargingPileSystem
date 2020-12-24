@@ -21,13 +21,23 @@ namespace ChargingPileSystem.Views.ChargingPile
         public ChargingPileUserControl(List<ElectricConfig> electricConfigs, SqlMethod sqlMethod, Form1 form1, List<GatewayConfig> gatewayConfigs)
         {
             InitializeComponent();
+            Form1 = form1;
             foreach (var item in electricConfigs)
             {
-                if (!item.TotalMeterFlag)//子電表 334, 222
+                if (!item.TotalMeterFlag)//子電表
                 {
-                    SubMeterUserControl subMeter = new SubMeterUserControl(item, sqlMethod, form1, gatewayConfigs) { SqlMethod = sqlMethod, Location = new Point(5 + 343 * (SubMeterIndex % 5), 2 + 225 * (SubMeterIndex / 5)) }; SubMeterIndex++;
-                    SubMeters.Add(subMeter);
-                    xtraScrollableControl1.Controls.Add(subMeter);
+                    if (Form1.ConnectionFlag)
+                    {
+                        SubMeterUserControl subMeter = new SubMeterUserControl(item, sqlMethod, form1, gatewayConfigs) { SqlMethod = sqlMethod, Location = new Point(5 + 340 * (SubMeterIndex % 5), 2 + 225 * (SubMeterIndex / 5)) }; SubMeterIndex++;
+                        SubMeters.Add(subMeter);
+                        xtraScrollableControl1.Controls.Add(subMeter);
+                    }
+                    else
+                    {
+                        SubMeterUserControl subMeter = new SubMeterUserControl(item, sqlMethod, form1, gatewayConfigs) { SqlMethod = sqlMethod, Location = new Point(5 + 340 * (SubMeterIndex % 5), 2 + 225 * (SubMeterIndex / 5)), ElectricConfigs = electricConfigs }; SubMeterIndex++;
+                        SubMeters.Add(subMeter);
+                        xtraScrollableControl1.Controls.Add(subMeter);
+                    }
                 }
             }
         }

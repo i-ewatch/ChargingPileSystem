@@ -157,6 +157,7 @@
     </Compile>
     <Compile Include="Configuration\BankAccountSetting.cs" />
     <Compile Include="Configuration\ButtonSetting.cs" />
+    <Compile Include="Configuration\DemoSetting.cs" />
     <Compile Include="Configuration\LogoSetting.cs" />
     <Compile Include="Configuration\SqlDBSetting.cs" />
     <Compile Include="Controllers\ButtonControl.cs" />
