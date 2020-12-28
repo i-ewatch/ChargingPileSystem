@@ -240,6 +240,7 @@ namespace ChargingPileSystem
             }
             else if (!ConnectionFlag)
             {
+                SQLDataBaseFlag = true;
                 GatewayConfig gateway = new GatewayConfig() { GatewayIndex = 0, GatewayName = "通道1" };
                 GatewayConfigs.Add(gateway);
                 for (int i = 0; i < 20; i++)
