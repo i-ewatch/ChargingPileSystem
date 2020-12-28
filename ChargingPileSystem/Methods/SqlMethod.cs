@@ -187,6 +187,7 @@ namespace ChargingPileSystem.Methods
 
         }
         #endregion
+
         #region 變更 Electricconfig設備名稱
         /// <summary>
         /// 變更 Electricconfig設備名稱
@@ -229,6 +230,7 @@ namespace ChargingPileSystem.Methods
             }
         }
         #endregion
+
         #region 查詢 累積用電度
         /// <summary>
         /// 查詢 累積用電度
