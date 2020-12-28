@@ -228,7 +228,7 @@ namespace ChargingPileSystem.Views.ChargingPile
                                 kWhlabelControl.Text = protocol.kWh.ToString("F2");
                             }
                             break;
-                        case ElectricEnumType.TWCCPM4:
+                        case ElectricEnumType.TWCPM4:
                             {
                                 TWCCPM4Protocol protocol = (TWCCPM4Protocol)Data[0];
                                 RSvlabelControl.Text = protocol.RSv.ToString("F1");

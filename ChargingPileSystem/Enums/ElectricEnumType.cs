@@ -33,8 +33,8 @@ namespace ChargingPileSystem.Enums
         /// </summary>
         PM200,
         /// <summary>
-        /// TWC-CPM4
+        /// TW-CPM4
         /// </summary>
-        TWCCPM4
+        TWCPM4
     }
 }

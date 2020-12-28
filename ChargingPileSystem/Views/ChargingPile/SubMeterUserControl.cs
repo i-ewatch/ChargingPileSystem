@@ -132,10 +132,10 @@ namespace ChargingPileSystem.Views.ChargingPile
                                 }
                             }
                             break;
-                        case ElectricEnumType.TWCCPM4:
+                        case ElectricEnumType.TWCPM4:
                             {
                                 {
-                                    TWCCPM4Protocol protocol = (TWCCPM4Protocol)Data[0];
+                                    TWCPM4Protocol protocol = (TWCPM4Protocol)Data[0];
                                     NowkWlabelControl.Text = protocol.kW.ToString("F2");
                                 }
                             }

@@ -72,9 +72,9 @@ namespace ChargingPileSystem.Components
                                 AbsProtocols.Add(protocol);
                             }
                             break;
-                        case ElectricEnumType.TWCCPM4:
+                        case ElectricEnumType.TWCPM4:
                             {
-                                TWCCPM4Protocol protocol = new TWCCPM4Protocol() { GatewayIndex = item.GatewayIndex, DeviceIndex = item.DeviceIndex, ID = (byte)item.DeviceID, LoopEnumType = item.LoopEnumType, PhaseAngleEnumType = item.PhaseAngleEnumType, PhaseEnumType = item.PhaseEnumType, ElectricEnumType = item.ElectricEnumType };
+                                TWCPM4Protocol protocol = new TWCPM4Protocol() { GatewayIndex = item.GatewayIndex, DeviceIndex = item.DeviceIndex, ID = (byte)item.DeviceID, LoopEnumType = item.LoopEnumType, PhaseAngleEnumType = item.PhaseAngleEnumType, PhaseEnumType = item.PhaseEnumType, ElectricEnumType = item.ElectricEnumType };
                                 AbsProtocols.Add(protocol);
                             }
                             break;

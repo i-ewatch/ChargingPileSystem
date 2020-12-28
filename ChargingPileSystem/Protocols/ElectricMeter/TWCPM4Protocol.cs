@@ -30,6 +30,36 @@ namespace ChargingPileSystem.Protocols.ElectricMeter
                 {
                     case 1://(0.1mV)
                         {
+                            Rv = Value[Index] * 0.0001; Index++;
+                            Sv = Value[Index] * 0.0001; Index++;
+                            Tv = Value[Index] * 0.0001; Index += 4;
+                            RSv = Value[Index] * 0.0001; Index++;
+                            STv = Value[Index] * 0.0001; Index++;
+                            TRv = Value[Index] * 0.0001;
+                        }
+                        break;
+                    case 2:
+                        {
+                            Rv = Value[Index] * 0.001; Index++;
+                            Sv = Value[Index] * 0.001; Index++;
+                            Tv = Value[Index] * 0.001; Index += 4;
+                            RSv = Value[Index] * 0.001; Index++;
+                            STv = Value[Index] * 0.001; Index++;
+                            TRv = Value[Index] * 0.001;
+                        }
+                        break;
+                    case 4:
+                        {
+                            Rv = Value[Index] * 0.01; Index++;
+                            Sv = Value[Index] * 0.01; Index++;
+                            Tv = Value[Index] * 0.01; Index += 4;
+                            RSv = Value[Index] * 0.01; Index++;
+                            STv = Value[Index] * 0.01; Index++;
+                            TRv = Value[Index] * 0.01;
+                        }
+                        break;
+                    case 8:
+                        {
                             Rv = Value[Index] * 0.1; Index++;
                             Sv = Value[Index] * 0.1; Index++;
                             Tv = Value[Index] * 0.1; Index += 4;
@@ -38,7 +68,7 @@ namespace ChargingPileSystem.Protocols.ElectricMeter
                             TRv = Value[Index] * 0.1;
                         }
                         break;
-                    case 2:
+                    case 16:
                         {
                             Rv = Value[Index] * 1; Index++;
                             Sv = Value[Index] * 1; Index++;
@@ -48,7 +78,7 @@ namespace ChargingPileSystem.Protocols.ElectricMeter
                             TRv = Value[Index] * 1;
                         }
                         break;
-                    case 4:
+                    case 32:
                         {
                             Rv = Value[Index] * 10; Index++;
                             Sv = Value[Index] * 10; Index++;
@@ -56,36 +86,6 @@ namespace ChargingPileSystem.Protocols.ElectricMeter
                             RSv = Value[Index] * 10; Index++;
                             STv = Value[Index] * 10; Index++;
                             TRv = Value[Index] * 10;
-                        }
-                        break;
-                    case 8:
-                        {
-                            Rv = Value[Index] * 100; Index++;
-                            Sv = Value[Index] * 100; Index++;
-                            Tv = Value[Index] * 100; Index += 4;
-                            RSv = Value[Index] * 100; Index++;
-                            STv = Value[Index] * 100; Index++;
-                            TRv = Value[Index] * 100;
-                        }
-                        break;
-                    case 16:
-                        {
-                            Rv = Value[Index] * 1000; Index++;
-                            Sv = Value[Index] * 1000; Index++;
-                            Tv = Value[Index] * 1000; Index += 4;
-                            RSv = Value[Index] * 1000; Index++;
-                            STv = Value[Index] * 1000; Index++;
-                            TRv = Value[Index] * 1000;
-                        }
-                        break;
-                    case 32:
-                        {
-                            Rv = Value[Index] * 10000; Index++;
-                            Sv = Value[Index] * 10000; Index++;
-                            Tv = Value[Index] * 10000; Index += 4;
-                            RSv = Value[Index] * 10000; Index++;
-                            STv = Value[Index] * 10000; Index++;
-                            TRv = Value[Index] * 10000;
                         }
                         break;
                 }
@@ -96,44 +96,44 @@ namespace ChargingPileSystem.Protocols.ElectricMeter
                 {
                     case 1:
                         {
+                            RA = Value[Index] * 0.0001; Index++;
+                            SA = Value[Index] * 0.0001; Index++;
+                            TA = Value[Index] * 0.0001;
+                        }
+                        break;
+                    case 2:
+                        {
+                            RA = Value[Index] * 0.001; Index++;
+                            SA = Value[Index] * 0.001; Index++;
+                            TA = Value[Index] * 0.001;
+                        }
+                        break;
+                    case 4:
+                        {
+                            RA = Value[Index] * 0.01; Index++;
+                            SA = Value[Index] * 0.01; Index++;
+                            TA = Value[Index] * 0.01;
+                        }
+                        break;
+                    case 8:
+                        {
                             RA = Value[Index] * 0.1; Index++;
                             SA = Value[Index] * 0.1; Index++;
                             TA = Value[Index] * 0.1;
                         }
                         break;
-                    case 2:
+                    case 16:
                         {
                             RA = Value[Index] * 1; Index++;
                             SA = Value[Index] * 1; Index++;
                             TA = Value[Index] * 1;
                         }
                         break;
-                    case 4:
+                    case 32:
                         {
                             RA = Value[Index] * 10; Index++;
                             SA = Value[Index] * 10; Index++;
                             TA = Value[Index] * 10;
-                        }
-                        break;
-                    case 8:
-                        {
-                            RA = Value[Index] * 100; Index++;
-                            SA = Value[Index] * 100; Index++;
-                            TA = Value[Index] * 100;
-                        }
-                        break;
-                    case 16:
-                        {
-                            RA = Value[Index] * 1000; Index++;
-                            SA = Value[Index] * 1000; Index++;
-                            TA = Value[Index] * 1000;
-                        }
-                        break;
-                    case 32:
-                        {
-                            RA = Value[Index] * 10000; Index++;
-                            SA = Value[Index] * 10000; Index++;
-                            TA = Value[Index] * 10000;
                         }
                         break;
                 }
