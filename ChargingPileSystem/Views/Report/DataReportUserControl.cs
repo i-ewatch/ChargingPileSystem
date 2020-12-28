@@ -2,16 +2,10 @@
 using ChargingPileSystem.Enums;
 using ChargingPileSystem.Modules;
 using DevExpress.XtraCharts;
-using DevExpress.XtraEditors;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ChargingPileSystem.Views.Report

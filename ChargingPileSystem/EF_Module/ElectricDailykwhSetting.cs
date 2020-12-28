@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ChargingPileSystem.EF_Modules
+﻿namespace ChargingPileSystem.EF_Modules
 {
     public partial class ElectricDailykwhSetting
     {

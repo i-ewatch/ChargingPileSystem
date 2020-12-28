@@ -1,24 +1,19 @@
-﻿using DevExpress.XtraEditors;
+﻿using ChargingPileSystem.EF_Module;
 using ChargingPileSystem.EF_Modules;
+using ChargingPileSystem.Enums;
+using ChargingPileSystem.Methods;
+using ChargingPileSystem.Modules;
+using ChargingPileSystem.Protocols.ElectricMeter;
+using ChargingPileSystem.Views.Setting;
+using DevExpress.XtraBars.Docking2010.Customization;
+using DevExpress.XtraBars.Docking2010.Views.WindowsUI;
+using DevExpress.XtraCharts;
+using DevExpress.XtraEditors;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ChargingPileSystem.Enums;
-using ChargingPileSystem.Protocols.ElectricMeter;
-using DevExpress.XtraCharts;
-using ChargingPileSystem.Modules;
-using ChargingPileSystem.Methods;
-using DevExpress.Utils;
-using DevExpress.XtraBars.Docking2010.Customization;
-using DevExpress.XtraBars.Docking2010.Views.WindowsUI;
-using ChargingPileSystem.Views.Setting;
-using ChargingPileSystem.EF_Module;
 
 namespace ChargingPileSystem.Views.ChargingPile
 {
@@ -230,7 +225,7 @@ namespace ChargingPileSystem.Views.ChargingPile
                             break;
                         case ElectricEnumType.TWCPM4:
                             {
-                                TWCCPM4Protocol protocol = (TWCCPM4Protocol)Data[0];
+                                TWCPM4Protocol protocol = (TWCPM4Protocol)Data[0];
                                 RSvlabelControl.Text = protocol.RSv.ToString("F1");
                                 STvlabelControl.Text = protocol.STv.ToString("F1");
                                 TRvlabelControl.Text = protocol.TRv.ToString("F1");

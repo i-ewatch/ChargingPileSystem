@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ChargingPileSystem.Protocols.ElectricMeter
+﻿namespace ChargingPileSystem.Protocols.ElectricMeter
 {
     public abstract class ElectricMeterData:AbsProtocol
     {

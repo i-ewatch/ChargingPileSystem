@@ -1,17 +1,9 @@
-﻿using DevExpress.XtraEditors;
+﻿using ChargingPileSystem.EF_Module;
 using ChargingPileSystem.EF_Modules;
+using ChargingPileSystem.Methods;
 using Serilog;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ChargingPileSystem.Methods;
-using ChargingPileSystem.EF_Module;
 
 namespace ChargingPileSystem.Views.ChargingPile
 {
@@ -55,7 +47,7 @@ namespace ChargingPileSystem.Views.ChargingPile
                         }
                         else
                         {
-                            MasterMeterUserControl masterMeter = new MasterMeterUserControl(item, sqlMethod, form1, gatewayConfigs) { SqlMethod = sqlMethod ,ElectricConfigs = electricConfigs };
+                            MasterMeterUserControl masterMeter = new MasterMeterUserControl(item, sqlMethod, form1, gatewayConfigs) { SqlMethod = sqlMethod, ElectricConfigs = electricConfigs };
                             MasterMeters.Add(masterMeter);
                             MasterMetenavigationFrame.AddPage(masterMeter);
                         }
@@ -105,8 +97,11 @@ namespace ChargingPileSystem.Views.ChargingPile
                         MasterMeterIndex++;
                     }
                 }
-                MasterMeters[MasterMetenavigationFrame.SelectedPageIndex].AbsProtocols = AbsProtocols;
-                MasterMeters[MasterMetenavigationFrame.SelectedPageIndex].TextChange();
+                if (MasterMetenavigationFrame.SelectedPageIndex != -1)
+                {
+                    MasterMeters[MasterMetenavigationFrame.SelectedPageIndex].AbsProtocols = AbsProtocols;
+                    MasterMeters[MasterMetenavigationFrame.SelectedPageIndex].TextChange();
+                }
                 #region 分電表
                 ChargingPileUserControl.AbsProtocols = AbsProtocols;
                 ChargingPileUserControl.ElectricConfigs = ElectricConfigs;

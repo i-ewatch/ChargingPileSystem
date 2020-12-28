@@ -207,7 +207,7 @@
     <Compile Include="Protocols\ElectricMeter\PA310Protocol.cs" />
     <Compile Include="Protocols\ElectricMeter\PA60Protocol.cs" />
     <Compile Include="Protocols\ElectricMeter\PM200Protocol.cs" />
-    <Compile Include="Protocols\ElectricMeter\TWCCPM4Protocol.cs" />
+    <Compile Include="Protocols\ElectricMeter\TWCPM4Protocol.cs" />
     <Compile Include="Protocols\Senser\BlackSenserProtocol.cs" />
     <Compile Include="Protocols\Senser\SenserData.cs" />
     <Compile Include="Protocols\Senser\WhiteSenserProtocol.cs" />

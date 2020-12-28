@@ -1,14 +1,10 @@
 ﻿using Modbus.Device;
 using Serilog;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChargingPileSystem.Protocols.Senser
 {
-   public class WhiteSenserProtocol:SenserData
+    public class WhiteSenserProtocol:SenserData
     {
         public override void DataReader(ModbusMaster master)
         {

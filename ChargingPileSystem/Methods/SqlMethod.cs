@@ -1,19 +1,16 @@
 ﻿using ChargingPileSystem.Configuration;
 using ChargingPileSystem.EF_Module;
+using ChargingPileSystem.EF_Modules;
 using ChargingPileSystem.Enums;
+using ChargingPileSystem.Protocols.ElectricMeter;
+using ChargingPileSystem.Protocols.Senser;
+using Dapper;
 using MySql.Data.MySqlClient;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dapper;
-using Serilog;
-using ChargingPileSystem.EF_Modules;
-using ChargingPileSystem.Protocols;
-using ChargingPileSystem.Protocols.ElectricMeter;
-using ChargingPileSystem.Protocols.Senser;
 
 namespace ChargingPileSystem.Methods
 {
@@ -103,6 +100,56 @@ namespace ChargingPileSystem.Methods
                     }
                     break;
             }
+        }
+        #endregion
+
+        #region 查詢 DataBase
+        /// <summary>
+        /// 查詢 DataBase
+        /// </summary>
+        /// <returns></returns>
+        public bool Search_DataBase()
+        {
+            try
+            {
+                bool ExistFlag = false;
+                switch (SQLEnumType)
+                {
+                    case SQLEnumType.SqlDB:
+                        {
+                            string sql = $"SELECT * FROM dbo.sysdatabases WHERE name = '{setting.InitialCatalog}'";
+                            using (var conn = new SqlConnection(Serverscsb.ConnectionString))
+                            {
+                                var data = conn.Query(sql).ToList();
+                                if (data.Count > 0)
+                                {
+                                    ExistFlag= true;
+                                }
+                            }
+                        }
+                        break;
+                    case SQLEnumType.MariaDB:
+                        {
+                            string sql = $"SHOW DATABASES LIKE '{setting.InitialCatalog}'";
+                            using (var conn = new MySqlConnection(Serverscsb.ConnectionString))
+                            {
+                                var data = conn.Query(sql).ToList();
+                                if (data.Count > 0)
+                                {
+                                    ExistFlag= true;
+                                }
+                            }
+                        }
+                        break;
+                }
+                return ExistFlag;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"查詢 DataBase 失敗 DataBase名稱 : ${setting.InitialCatalog}");
+                return false;
+            }
+
         }
         #endregion
 
@@ -196,7 +243,7 @@ namespace ChargingPileSystem.Methods
         /// <param name="GatewayIndex">通訊編號</param>
         /// <param name="DeviceIndex">設備編號</param>
         /// <returns></returns>
-        public bool Updata_ElectricConfig(string DeviceName,int GatewayIndex, int DeviceIndex)
+        public bool Updata_ElectricConfig(string DeviceName, int GatewayIndex, int DeviceIndex)
         {
             try
             {
@@ -252,7 +299,7 @@ namespace ChargingPileSystem.Methods
                         {
                             using (var conn = new SqlConnection(scsb.ConnectionString))
                             {
-                                electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime , EndTime , GatewayIndex, DeviceIndex }).ToList();
+                                electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime, EndTime, GatewayIndex, DeviceIndex }).ToList();
                             }
                         }
                         break;
@@ -260,7 +307,7 @@ namespace ChargingPileSystem.Methods
                         {
                             using (var conn = new MySqlConnection(myscbs.ConnectionString))
                             {
-                                electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime, EndTime , GatewayIndex, DeviceIndex }).ToList();
+                                electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime, EndTime, GatewayIndex, DeviceIndex }).ToList();
                             }
                         }
                         break;
@@ -382,7 +429,7 @@ namespace ChargingPileSystem.Methods
                                     case SearchEnumType.NowMonth:
                                         {
                                             searchenumtype = "本月累積用電";
-                                            electricTotalPrices = conn.Query<ElectricTotalPrice>(Monthsql, new { StartTime = DateTime.Now.ToString("yyyyMM")+"%", GatewayIndex, DeviceIndex }).ToList();
+                                            electricTotalPrices = conn.Query<ElectricTotalPrice>(Monthsql, new { StartTime = DateTime.Now.ToString("yyyyMM") + "%", GatewayIndex, DeviceIndex }).ToList();
                                         }
                                         break;
                                     case SearchEnumType.Total:
@@ -416,7 +463,7 @@ namespace ChargingPileSystem.Methods
                                     case SearchEnumType.NowMonth:
                                         {
                                             searchenumtype = "本月累積用電";
-                                            electricTotalPrices = conn.Query<ElectricTotalPrice>(Monthsql, new { StartTime = DateTime.Now.ToString("yyyyMM")+"%", GatewayIndex, DeviceIndex }).ToList();
+                                            electricTotalPrices = conn.Query<ElectricTotalPrice>(Monthsql, new { StartTime = DateTime.Now.ToString("yyyyMM") + "%", GatewayIndex, DeviceIndex }).ToList();
                                         }
                                         break;
                                     case SearchEnumType.Total:
@@ -472,7 +519,7 @@ namespace ChargingPileSystem.Methods
                         {
                             using (var conn = new SqlConnection(scsb.ConnectionString))
                             {
-                                electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new {StartTime,EndTime, GatewayIndex, DeviceIndex }).ToList();
+                                electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime, EndTime, GatewayIndex, DeviceIndex }).ToList();
                             }
                         }
                         break;
@@ -480,7 +527,7 @@ namespace ChargingPileSystem.Methods
                         {
                             using (var conn = new MySqlConnection(myscbs.ConnectionString))
                             {
-                                electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new {StartTime,  EndTime, GatewayIndex, DeviceIndex }).ToList();
+                                electricTotalPrices = conn.Query<ElectricTotalPrice>(sql, new { StartTime, EndTime, GatewayIndex, DeviceIndex }).ToList();
                             }
                         }
                         break;

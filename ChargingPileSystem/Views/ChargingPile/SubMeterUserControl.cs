@@ -7,15 +7,10 @@ using ChargingPileSystem.Views.Setting;
 using DevExpress.XtraBars.Docking2010.Customization;
 using DevExpress.XtraBars.Docking2010.Views.WindowsUI;
 using DevExpress.XtraEditors;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace ChargingPileSystem.Views.ChargingPile
 {
@@ -84,6 +79,7 @@ namespace ChargingPileSystem.Views.ChargingPile
                 var Data = AbsProtocols.Where(g => g.GatewayIndex == ElectricConfig.GatewayIndex & g.DeviceIndex == ElectricConfig.DeviceIndex).ToList();
                 if (Data.Count > 0)
                 {
+                    ElectricEnumType = (ElectricEnumType)Data[0].ElectricEnumType;
                     switch (ElectricEnumType)
                     {
                         case ElectricEnumType.PA310:

@@ -1,16 +1,10 @@
-﻿using DevExpress.XtraEditors;
+﻿using ChargingPileSystem.EF_Module;
 using ChargingPileSystem.EF_Modules;
-using System;
+using ChargingPileSystem.Methods;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ChargingPileSystem.Methods;
-using ChargingPileSystem.EF_Module;
 
 namespace ChargingPileSystem.Views.ChargingPile
 {

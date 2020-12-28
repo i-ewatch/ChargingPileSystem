@@ -1,31 +1,29 @@
-﻿using ChargingPileSystem.Configuration;
+﻿using ChargingPileSystem.Components;
+using ChargingPileSystem.Configuration;
 using ChargingPileSystem.Controllers;
 using ChargingPileSystem.EF_Module;
-using ChargingPileSystem.Methods;
-using DevExpress.XtraBars;
-using DevExpress.XtraBars.Navigation;
 using ChargingPileSystem.EF_Modules;
+using ChargingPileSystem.Enums;
+using ChargingPileSystem.Methods;
+using ChargingPileSystem.Protocols;
+using ChargingPileSystem.Views;
+using ChargingPileSystem.Views.ChargingPile;
+using ChargingPileSystem.Views.Report;
+using ChargingPileSystem.Views.Setting;
+using DevExpress.Utils;
+using DevExpress.XtraBars;
+using DevExpress.XtraBars.Docking2010.Customization;
+using DevExpress.XtraBars.Docking2010.Views.WindowsUI;
+using DevExpress.XtraBars.Navigation;
+using DevExpress.XtraEditors;
+using Serilog;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using DevExpress.XtraEditors;
-using DevExpress.XtraBars.Docking2010.Customization;
-using DevExpress.XtraBars.Docking2010.Views.WindowsUI;
-using ChargingPileSystem.Components;
-using ChargingPileSystem.Protocols;
-using ChargingPileSystem.Enums;
-using ChargingPileSystem.Views.ChargingPile;
-using ChargingPileSystem.Views.Report;
-using ChargingPileSystem.Views;
-using Serilog;
-using ChargingPileSystem.Views.Setting;
-using DevExpress.Utils;
 
 namespace ChargingPileSystem
 {
@@ -219,10 +217,13 @@ namespace ChargingPileSystem
             {
                 SqlMethod = new SqlMethod() { setting = SqlDBSetting, BankAccountSetting = BankAccountSetting };
                 SqlMethod.SQLConnect();
-                GatewayConfigs = SqlMethod.Search_GatewayConfig();//通道資訊
-                ElectricConfigs = SqlMethod.Search_Electricconfig();//電表設備資訊
-                SqlComponent = new SqlComponent() { SqlMethod = SqlMethod, BankAccountSetting = BankAccountSetting };
-                SqlComponent.MyWorkState = ConnectionFlag;
+                if (SqlMethod.Search_DataBase())
+                {
+                    GatewayConfigs = SqlMethod.Search_GatewayConfig();//通道資訊
+                    ElectricConfigs = SqlMethod.Search_Electricconfig();//電表設備資訊
+                    SqlComponent = new SqlComponent() { SqlMethod = SqlMethod, BankAccountSetting = BankAccountSetting };
+                    SqlComponent.MyWorkState = ConnectionFlag;
+                }
             }
             else if (!ConnectionFlag)
             {
@@ -512,7 +513,10 @@ namespace ChargingPileSystem
             {
                 item.MyWorkState = false;
             }
-            SqlComponent.MyWorkState = false;
+            if (SqlComponent != null)
+            {
+                SqlComponent.MyWorkState = false;
+            }
             timer1.Enabled = false;
             this.Dispose();
         }
