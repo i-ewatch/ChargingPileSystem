@@ -54,7 +54,15 @@ namespace ChargingPileSystem
         /// <summary>
         /// 錯誤泡泡視窗
         /// </summary>
-        public FlyoutPanel ErrorflyoutPanel;
+        public FlyoutPanel ErrorflyoutPanel { get; set; }
+        /// <summary>
+        /// 資料庫錯誤泡泡視窗
+        /// </summary>
+        public FlyoutPanel SQLErrorflyoutPanel { get; set; }
+        /// <summary>
+        /// 資料庫是否存在
+        /// </summary>
+        private bool SQLDataBaseFlag { get; set; }
         #endregion
         #region Jsons
         /// <summary>
@@ -219,10 +227,15 @@ namespace ChargingPileSystem
                 SqlMethod.SQLConnect();
                 if (SqlMethod.Search_DataBase())
                 {
+                    SQLDataBaseFlag = true;
                     GatewayConfigs = SqlMethod.Search_GatewayConfig();//通道資訊
                     ElectricConfigs = SqlMethod.Search_Electricconfig();//電表設備資訊
                     SqlComponent = new SqlComponent() { SqlMethod = SqlMethod, BankAccountSetting = BankAccountSetting };
                     SqlComponent.MyWorkState = ConnectionFlag;
+                }
+                else
+                {
+                    SQLDataBaseFlag = false;
                 }
             }
             else if (!ConnectionFlag)
@@ -246,7 +259,7 @@ namespace ChargingPileSystem
             #endregion
 
             #region 通訊
-            if (ConnectionFlag)
+            if (ConnectionFlag && GatewayConfigs != null && ElectricConfigs != null)
             {
                 foreach (var item in GatewayConfigs)
                 {
@@ -475,6 +488,32 @@ namespace ChargingPileSystem
             }
         }
         #endregion
+        #region 資料庫錯誤泡泡視窗
+        /// <summary>
+        /// 資料庫錯誤泡泡視窗
+        /// </summary>
+        public void SqlComponentFail()
+        {
+            if (SQLErrorflyoutPanel == null)
+            {
+                SQLErrorflyoutPanel = new FlyoutPanel()
+                {
+                    OwnerControl = this,
+                    Size = new Size(1920, 63)
+                };
+                LabelControl label = new LabelControl() { Size = new Size(1920, 63) };
+                label.Appearance.TextOptions.HAlignment = HorzAlignment.Center;
+                label.Appearance.Font = new Font("微軟正黑體", 30);
+                label.Appearance.ForeColor = Color.White;
+                label.Appearance.BackColor = Color.Red;
+                label.AutoSizeMode = LabelAutoSizeMode.None;
+                label.Text = "資料庫未建立!";
+                SQLErrorflyoutPanel.Controls.Add(label);
+                SQLErrorflyoutPanel.Options.AnchorType = DevExpress.Utils.Win.PopupToolWindowAnchor.Bottom;
+                SQLErrorflyoutPanel.ShowPopup();
+            }
+        }
+        #endregion
         private void timer1_Tick(object sender, EventArgs e)
         {
             #region 自動登出
@@ -496,7 +535,10 @@ namespace ChargingPileSystem
                         AbsProtocols.Add(dataitem);
                     }
                 }
-                SqlComponent.AbsProtocols = AbsProtocols;
+                if (SqlComponent != null)
+                {
+                    SqlComponent.AbsProtocols = AbsProtocols;
+                }
             }
             if (field4UserControls.Count > NavigationFrame.SelectedPageIndex)
             {
@@ -525,6 +567,10 @@ namespace ChargingPileSystem
         {
             Location = new Point(0, 0);
             Size = new Size(1920, 1080);
+            if (!SQLDataBaseFlag)
+            {
+                SqlComponentFail();
+            }
         }
     }
 }

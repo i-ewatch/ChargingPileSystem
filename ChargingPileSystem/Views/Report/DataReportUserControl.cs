@@ -63,57 +63,60 @@ namespace ChargingPileSystem.Views.Report
                     {
                         if (Form1.ConnectionFlag)
                         {
-                            var ElectricConfig = ElectricConfigs.Where(g => g.DeviceName == SearchDevicecomboBoxEdit.Text).Single();
-                            var data = SqlMethod.Search_ThreePhaseElectricMeter_Log(Convert.ToDateTime(StartdateEdit.EditValue).ToString("yyyyMMdd"), Convert.ToDateTime(EnddateEdit.EditValue).ToString("yyyyMMdd"), ElectricConfig.GatewayIndex, ElectricConfig.DeviceIndex);
-                            if (data != null)
+                            if (ElectricConfigs.Count > 0)
                             {
-                                gridControl.DataSource = data;
-                                chartControl.DataSource = data;
-                                #region 報表
-                                for (int i = 0; i < gridView1.Columns.Count; i++)
+                                var ElectricConfig = ElectricConfigs.Where(g => g.DeviceName == SearchDevicecomboBoxEdit.Text).Single();
+                                var data = SqlMethod.Search_ThreePhaseElectricMeter_Log(Convert.ToDateTime(StartdateEdit.EditValue).ToString("yyyyMMdd"), Convert.ToDateTime(EnddateEdit.EditValue).ToString("yyyyMMdd"), ElectricConfig.GatewayIndex, ElectricConfig.DeviceIndex);
+                                if (data != null)
                                 {
-                                    if (gridView1.Columns[i].FieldName == "ttimen")
+                                    gridControl.DataSource = data;
+                                    chartControl.DataSource = data;
+                                    #region 報表
+                                    for (int i = 0; i < gridView1.Columns.Count; i++)
                                     {
-                                        gridView1.Columns[i].Caption = "時間";
-                                        gridView1.Columns[i].DisplayFormat.FormatString = "yyyy/MM/dd HH:mm";
-                                        gridView1.Columns[i].BestFit();
+                                        if (gridView1.Columns[i].FieldName == "ttimen")
+                                        {
+                                            gridView1.Columns[i].Caption = "時間";
+                                            gridView1.Columns[i].DisplayFormat.FormatString = "yyyy/MM/dd HH:mm";
+                                            gridView1.Columns[i].BestFit();
+                                        }
+                                        else if (gridView1.Columns[i].FieldName == "kw")
+                                        {
+                                            gridView1.Columns[i].Caption = "即時用電";
+                                            gridView1.Columns[i].BestFit();
+                                        }
+                                        else
+                                        {
+                                            gridView1.Columns[i].Visible = false;
+                                        }
                                     }
-                                    else if (gridView1.Columns[i].FieldName == "kw")
+                                    #endregion
+                                    #region 圖表
+                                    Series series = new Series($"{SearchDevicecomboBoxEdit.Text}", ViewType.Line);
+                                    series.ArgumentDataMember = "ttimen";
+                                    series.ValueDataMembers.AddRange(new string[] { "kw" });
+                                    series.CrosshairLabelPattern = "{S} \r時間 : {A:yyyy-MM-dd HH:mm}\r{V:0.##} kW";
+                                    series.LabelsVisibility = DevExpress.Utils.DefaultBoolean.False;
+                                    chartControl.Series.Add(series);
+                                    if (chartControl.DataSource != null && chartControl.Series.Count > 0)
                                     {
-                                        gridView1.Columns[i].Caption = "即時用電";
-                                        gridView1.Columns[i].BestFit();
+                                        XYDiagram diagram = (XYDiagram)chartControl.Diagram;
+                                        if (diagram != null)
+                                        {
+                                            diagram.EnableAxisXZooming = true;//放大縮小
+                                            diagram.EnableAxisXScrolling = true;//拖曳
+                                            diagram.AxisX.DateTimeScaleOptions.MeasureUnit = DateTimeMeasureUnit.Minute; // 顯示設定
+                                            diagram.AxisX.DateTimeScaleOptions.GridAlignment = DateTimeGridAlignment.Minute; // 刻度設定 
+                                            diagram.AxisX.Label.Angle = 90;
+                                            diagram.AxisX.Label.TextPattern = "{A:yyyy-MM-dd HH:mm}";//X軸顯示
+                                            diagram.AxisX.WholeRange.SideMarginsValue = 0;//不需要邊寬
+                                        }
+                                        chartControl.CrosshairOptions.ShowArgumentLabels = false;//是否顯示Y軸垂直線
+                                        chartControl.CrosshairOptions.ShowArgumentLine = false;//是否顯示Y軸垂直線
+                                                                                               //chartControl.CrosshairOptions.ShowCrosshairLabels = false;//是否顯示Y軸垂直線
                                     }
-                                    else
-                                    {
-                                        gridView1.Columns[i].Visible = false;
-                                    }
+                                    #endregion
                                 }
-                                #endregion
-                                #region 圖表
-                                Series series = new Series($"{SearchDevicecomboBoxEdit.Text}", ViewType.Line);
-                                series.ArgumentDataMember = "ttimen";
-                                series.ValueDataMembers.AddRange(new string[] { "kw" });
-                                series.CrosshairLabelPattern = "{S} \r時間 : {A:yyyy-MM-dd HH:mm}\r{V:0.##} kW";
-                                series.LabelsVisibility = DevExpress.Utils.DefaultBoolean.False;
-                                chartControl.Series.Add(series);
-                                if (chartControl.DataSource != null && chartControl.Series.Count > 0)
-                                {
-                                    XYDiagram diagram = (XYDiagram)chartControl.Diagram;
-                                    if (diagram != null)
-                                    {
-                                        diagram.EnableAxisXZooming = true;//放大縮小
-                                        diagram.EnableAxisXScrolling = true;//拖曳
-                                        diagram.AxisX.DateTimeScaleOptions.MeasureUnit = DateTimeMeasureUnit.Minute; // 顯示設定
-                                        diagram.AxisX.DateTimeScaleOptions.GridAlignment = DateTimeGridAlignment.Minute; // 刻度設定 
-                                        diagram.AxisX.Label.Angle = 90;
-                                        diagram.AxisX.Label.TextPattern = "{A:yyyy-MM-dd HH:mm}";//X軸顯示
-                                        diagram.AxisX.WholeRange.SideMarginsValue = 0;//不需要邊寬
-                                    }
-                                    chartControl.CrosshairOptions.ShowArgumentLabels = false;//是否顯示Y軸垂直線
-                                    chartControl.CrosshairOptions.ShowArgumentLine = false;//是否顯示Y軸垂直線
-                                                                                           //chartControl.CrosshairOptions.ShowCrosshairLabels = false;//是否顯示Y軸垂直線
-                                }
-                                #endregion
                             }
                         }
                         else
@@ -179,55 +182,58 @@ namespace ChargingPileSystem.Views.Report
                     {
                         if (Form1.ConnectionFlag)
                         {
-                            var ElectricConfig = ElectricConfigs.Where(g => g.DeviceName == SearchDevicecomboBoxEdit.Text).Single();
-                            var data = SqlMethod.Search_ElectricTotalPrice(Convert.ToDateTime(StartdateEdit.EditValue).ToString("yyyyMMdd"), Convert.ToDateTime(EnddateEdit.EditValue).ToString("yyyyMMdd"), ElectricConfig.GatewayIndex, ElectricConfig.DeviceIndex);
-                            if (data != null)
+                            if (ElectricConfigs.Count > 0)
                             {
-                                gridControl.DataSource = data;
-                                chartControl.DataSource = data;
-                                #region 報表
-                                for (int i = 0; i < gridView1.Columns.Count; i++)
+                                var ElectricConfig = ElectricConfigs.Where(g => g.DeviceName == SearchDevicecomboBoxEdit.Text).Single();
+                                var data = SqlMethod.Search_ElectricTotalPrice(Convert.ToDateTime(StartdateEdit.EditValue).ToString("yyyyMMdd"), Convert.ToDateTime(EnddateEdit.EditValue).ToString("yyyyMMdd"), ElectricConfig.GatewayIndex, ElectricConfig.DeviceIndex);
+                                if (data != null)
                                 {
-                                    if (gridView1.Columns[i].FieldName == "ttimen")
+                                    gridControl.DataSource = data;
+                                    chartControl.DataSource = data;
+                                    #region 報表
+                                    for (int i = 0; i < gridView1.Columns.Count; i++)
                                     {
-                                        gridView1.Columns[i].Caption = "時間";
-                                        gridView1.Columns[i].DisplayFormat.FormatString = "yyyy/MM/dd";
-                                        gridView1.Columns[i].BestFit();
+                                        if (gridView1.Columns[i].FieldName == "ttimen")
+                                        {
+                                            gridView1.Columns[i].Caption = "時間";
+                                            gridView1.Columns[i].DisplayFormat.FormatString = "yyyy/MM/dd";
+                                            gridView1.Columns[i].BestFit();
+                                        }
+                                        else if (gridView1.Columns[i].FieldName == "KwhTotal")
+                                        {
+                                            gridView1.Columns[i].Caption = "累積用電";
+                                            gridView1.Columns[i].BestFit();
+                                        }
+                                        else
+                                        {
+                                            gridView1.Columns[i].Visible = false;
+                                        }
                                     }
-                                    else if (gridView1.Columns[i].FieldName == "KwhTotal")
+                                    #endregion
+                                    #region 圖表
+                                    Series series = new Series($"{SearchDevicecomboBoxEdit.Text}", ViewType.Bar);
+                                    series.ArgumentDataMember = "ttimen";
+                                    series.ValueDataMembers.AddRange(new string[] { "KwhTotal" });
+                                    series.CrosshairLabelPattern = "{S} \r時間 : {A:yyyy-MM-dd HH:mm}\r{V:0.##} kWh";
+                                    series.LabelsVisibility = DevExpress.Utils.DefaultBoolean.False;
+                                    chartControl.Series.Add(series);
+                                    if (chartControl.DataSource != null && chartControl.Series.Count > 0)
                                     {
-                                        gridView1.Columns[i].Caption = "累積用電";
-                                        gridView1.Columns[i].BestFit();
+                                        XYDiagram diagram = (XYDiagram)chartControl.Diagram;
+                                        if (diagram != null)
+                                        {
+                                            diagram.AxisX.DateTimeScaleOptions.MeasureUnit = DateTimeMeasureUnit.Day; // 顯示設定
+                                            diagram.AxisX.DateTimeScaleOptions.GridAlignment = DateTimeGridAlignment.Day; // 刻度設定 
+                                            diagram.AxisX.Label.Angle = 90;
+                                            diagram.AxisX.Label.TextPattern = "{A:yyyy-MM-dd}";//X軸顯示
+                                            diagram.AxisX.WholeRange.SideMarginsValue = 0;//不需要邊寬
+                                        }
+                                        chartControl.CrosshairOptions.ShowArgumentLabels = false;//是否顯示Y軸垂直線
+                                        chartControl.CrosshairOptions.ShowArgumentLine = false;//是否顯示Y軸垂直線
+                                                                                               //chartControl.CrosshairOptions.ShowCrosshairLabels = false;//是否顯示Y軸垂直線
                                     }
-                                    else
-                                    {
-                                        gridView1.Columns[i].Visible = false;
-                                    }
+                                    #endregion
                                 }
-                                #endregion
-                                #region 圖表
-                                Series series = new Series($"{SearchDevicecomboBoxEdit.Text}", ViewType.Bar);
-                                series.ArgumentDataMember = "ttimen";
-                                series.ValueDataMembers.AddRange(new string[] { "KwhTotal" });
-                                series.CrosshairLabelPattern = "{S} \r時間 : {A:yyyy-MM-dd HH:mm}\r{V:0.##} kWh";
-                                series.LabelsVisibility = DevExpress.Utils.DefaultBoolean.False;
-                                chartControl.Series.Add(series);
-                                if (chartControl.DataSource != null && chartControl.Series.Count > 0)
-                                {
-                                    XYDiagram diagram = (XYDiagram)chartControl.Diagram;
-                                    if (diagram != null)
-                                    {
-                                        diagram.AxisX.DateTimeScaleOptions.MeasureUnit = DateTimeMeasureUnit.Day; // 顯示設定
-                                        diagram.AxisX.DateTimeScaleOptions.GridAlignment = DateTimeGridAlignment.Day; // 刻度設定 
-                                        diagram.AxisX.Label.Angle = 90;
-                                        diagram.AxisX.Label.TextPattern = "{A:yyyy-MM-dd}";//X軸顯示
-                                        diagram.AxisX.WholeRange.SideMarginsValue = 0;//不需要邊寬
-                                    }
-                                    chartControl.CrosshairOptions.ShowArgumentLabels = false;//是否顯示Y軸垂直線
-                                    chartControl.CrosshairOptions.ShowArgumentLine = false;//是否顯示Y軸垂直線
-                                                                                           //chartControl.CrosshairOptions.ShowCrosshairLabels = false;//是否顯示Y軸垂直線
-                                }
-                                #endregion
                             }
                         }
                         else

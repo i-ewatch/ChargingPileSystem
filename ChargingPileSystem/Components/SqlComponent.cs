@@ -3,6 +3,7 @@ using Serilog;
 using System;
 using System.ComponentModel;
 using System.Threading;
+using ChargingPileSystem.Enums;
 
 namespace ChargingPileSystem.Components
 {
@@ -49,21 +50,108 @@ namespace ChargingPileSystem.Components
                             {
                                 if (item.ConnectFlag)
                                 {
-                                    PhaseEnumType = (Enums.PhaseEnumType)item.PhaseEnumType;
-                                    switch (PhaseEnumType)
+                                    if (item.ElectricEnumType != -1)
                                     {
-                                        case Enums.PhaseEnumType.ThreePhase:
-                                            {
-                                                ElectricMeterData data = (ElectricMeterData)item;
-                                                SqlMethod.Insert_ThreePhaseElectricMeter(data);
-                                            }
-                                            break;
-                                        case Enums.PhaseEnumType.SinglePhase:
-                                            {
-                                                MultiCircuitElectricMeterData data = (MultiCircuitElectricMeterData)item;
-                                                SqlMethod.Insert_SinglePhaseElectricMeter(data);
-                                            }
-                                            break;
+                                        ElectricEnumType = (Enums.ElectricEnumType)item.ElectricEnumType;
+                                        switch (ElectricEnumType)
+                                        {
+                                            case Enums.ElectricEnumType.PA310:
+                                                {
+                                                    PA310Protocol protocol = (PA310Protocol)item;
+                                                    PhaseEnumType PhaseEnumType = (PhaseEnumType)item.PhaseEnumType;
+                                                    switch (PhaseEnumType)
+                                                    {
+                                                        case Enums.PhaseEnumType.ThreePhase:
+                                                            SqlMethod.Insert_ThreePhaseElectricMeter(protocol);
+                                                            break;
+                                                        case Enums.PhaseEnumType.SinglePhase:
+                                                            SqlMethod.Insert_SinglePhaseElectricMeter(protocol);
+                                                            break;
+                                                    }
+                                                }
+                                                break;
+                                            case Enums.ElectricEnumType.HC660:
+                                                {
+                                                    HC6600Protocol protocol = (HC6600Protocol)item;
+                                                    PhaseEnumType PhaseEnumType = (PhaseEnumType)item.PhaseEnumType;
+                                                    switch (PhaseEnumType)
+                                                    {
+                                                        case Enums.PhaseEnumType.ThreePhase:
+                                                            SqlMethod.Insert_ThreePhaseElectricMeter(protocol);
+                                                            break;
+                                                        case Enums.PhaseEnumType.SinglePhase:
+                                                            SqlMethod.Insert_SinglePhaseElectricMeter(protocol);
+                                                            break;
+                                                    }
+                                                }
+                                                break;
+                                            case Enums.ElectricEnumType.CPM6:
+                                                {
+                                                    CPM6Protocol protocol = (CPM6Protocol)item;
+                                                    PhaseEnumType PhaseEnumType = (PhaseEnumType)item.PhaseEnumType;
+                                                    switch (PhaseEnumType)
+                                                    {
+                                                        case Enums.PhaseEnumType.ThreePhase:
+                                                            SqlMethod.Insert_ThreePhaseElectricMeter(protocol);
+                                                            break;
+                                                        case Enums.PhaseEnumType.SinglePhase:
+                                                            SqlMethod.Insert_SinglePhaseElectricMeter(protocol);
+                                                            break;
+                                                    }
+                                                }
+                                                break;
+                                            case Enums.ElectricEnumType.PA60:
+                                                {
+                                                    PA60Protocol protocol = (PA60Protocol)item;
+                                                    PhaseEnumType PhaseEnumType = (PhaseEnumType)item.PhaseEnumType;
+                                                    switch (PhaseEnumType)
+                                                    {
+                                                        case Enums.PhaseEnumType.ThreePhase:
+                                                            SqlMethod.Insert_ThreePhaseElectricMeter(protocol);
+                                                            break;
+                                                        case Enums.PhaseEnumType.SinglePhase:
+                                                            SqlMethod.Insert_SinglePhaseElectricMeter(protocol);
+                                                            break;
+                                                    }
+                                                }
+                                                break;
+                                            case Enums.ElectricEnumType.ABBM2M:
+                                                {
+                                                    ABBM2MProtocol protocol = (ABBM2MProtocol)item;
+                                                    PhaseEnumType PhaseEnumType = (PhaseEnumType)item.PhaseEnumType;
+                                                    switch (PhaseEnumType)
+                                                    {
+                                                        case Enums.PhaseEnumType.ThreePhase:
+                                                            SqlMethod.Insert_ThreePhaseElectricMeter(protocol);
+                                                            break;
+                                                        case Enums.PhaseEnumType.SinglePhase:
+                                                            SqlMethod.Insert_SinglePhaseElectricMeter(protocol);
+                                                            break;
+                                                    }
+                                                }
+                                                break;
+                                            case Enums.ElectricEnumType.PM200:
+                                                {
+                                                    PM200Protocol protocol = (PM200Protocol)item;
+                                                    SqlMethod.Insert_ThreePhaseElectricMeter(protocol);
+                                                }
+                                                break;
+                                            case Enums.ElectricEnumType.TWCPM4:
+                                                {
+                                                    TWCPM4Protocol protocol = (TWCPM4Protocol)item;
+                                                    PhaseEnumType PhaseEnumType = (PhaseEnumType)item.PhaseEnumType;
+                                                    switch (PhaseEnumType)
+                                                    {
+                                                        case Enums.PhaseEnumType.ThreePhase:
+                                                            SqlMethod.Insert_ThreePhaseElectricMeter(protocol);
+                                                            break;
+                                                        case Enums.PhaseEnumType.SinglePhase:
+                                                            SqlMethod.Insert_SinglePhaseElectricMeter(protocol);
+                                                            break;
+                                                    }
+                                                }
+                                                break;
+                                        }
                                     }
                                 }
                             }
