@@ -961,9 +961,9 @@ namespace ChargingPileSystem.Methods
                              $"hz={data.HZ[data.LoopEnumType]} " +
                              $"WHERE GatewayIndex = {data.GatewayIndex} AND DeviceIndex = {data.DeviceIndex}";
                         InsertForweb = $"INSERT INTO {setting.InitialCatalog}.SinglePhaseElectricMeter_ForWeb (ttime,ttimen,GatewayIndex,DeviceIndex,v,a,kw,kwh,kvar,kvarh,pfe,kva,kvah,hz)VALUES(" +
-                                    $"'{ttime}','{ttimen.ToString("yyyy/MM/dd HH:mm:ss")}',{data.GatewayIndex},{data.DeviceIndex},{data.Rv},{data.RA},{data.R_kW[data.LoopEnumType]},{data.R_kWh[data.LoopEnumType]},{data.R_kVAR[data.LoopEnumType]},{data.R_kVARh[data.LoopEnumType]},{data.R_PF[data.LoopEnumType]},{data.R_kVA[data.LoopEnumType]},{data.R_kVAh[data.LoopEnumType]},{data.HZ[data.LoopEnumType]})";
+                                    $"'{ttime}','{ttimen.ToString("yyyy/MM/dd HH:mm:ss")}',{data.GatewayIndex},{data.DeviceIndex},{data.Rv[data.LoopEnumType]},{data.RA[data.LoopEnumType]},{data.R_kW[data.LoopEnumType]},{data.R_kWh[data.LoopEnumType]},{data.R_kVAR[data.LoopEnumType]},{data.R_kVARh[data.LoopEnumType]},{data.R_PF[data.LoopEnumType]},{data.R_kVA[data.LoopEnumType]},{data.R_kVAh[data.LoopEnumType]},{data.HZ[data.LoopEnumType]})";
                         InsertLogsql = $"INSERT INTO {setting.InitialCatalog}.SinglePhaseElectricMeter_Log (ttime,ttimen,GatewayIndex,DeviceIndex,v,a,kw,kwh,kvar,kvarh,pfe,kva,kvah,hz)VALUES(" +
-                                    $"'{ttimen:yyyyMMddHHmm00}','{ttimen.ToString("yyyy/MM/dd HH:mm:00")}',{data.GatewayIndex},{data.DeviceIndex},{data.Rv},{data.RA},{data.R_kW[data.LoopEnumType]},{data.R_kWh[data.LoopEnumType]},{data.R_kVAR[data.LoopEnumType]},{data.R_kVARh[data.LoopEnumType]},{data.R_PF[data.LoopEnumType]},{data.R_kVA[data.LoopEnumType]},{data.R_kVAh[data.LoopEnumType]},{data.HZ[data.LoopEnumType]})";
+                                    $"'{ttimen:yyyyMMddHHmm00}','{ttimen.ToString("yyyy/MM/dd HH:mm:00")}',{data.GatewayIndex},{data.DeviceIndex},{data.Rv[data.LoopEnumType]},{data.RA[data.LoopEnumType]},{data.R_kW[data.LoopEnumType]},{data.R_kWh[data.LoopEnumType]},{data.R_kVAR[data.LoopEnumType]},{data.R_kVARh[data.LoopEnumType]},{data.R_PF[data.LoopEnumType]},{data.R_kVA[data.LoopEnumType]},{data.R_kVAh[data.LoopEnumType]},{data.HZ[data.LoopEnumType]})";
                     }
                     break;
                 case PhaseAngleEnumType.S:
@@ -983,9 +983,9 @@ namespace ChargingPileSystem.Methods
                              $"hz={data.HZ[data.LoopEnumType]} " +
                              $"WHERE GatewayIndex = {data.GatewayIndex} AND DeviceIndex = {data.DeviceIndex}";
                         InsertForweb = $"INSERT INTO {setting.InitialCatalog}.SinglePhaseElectricMeter_ForWeb (ttime,ttimen,GatewayIndex,DeviceIndex,v,a,kw,kwh,kvar,kvarh,pfe,kva,kvah,hz)VALUES(" +
-                                    $"'{ttime}','{ttimen.ToString("yyyy/MM/dd HH:mm:ss")}',{data.GatewayIndex},{data.DeviceIndex},{data.Sv},{data.SA},{data.S_kW[data.LoopEnumType]},{data.S_kWh[data.LoopEnumType]},{data.S_kVAR[data.LoopEnumType]},{data.S_kVARh[data.LoopEnumType]},{data.S_PF[data.LoopEnumType]},{data.S_kVA[data.LoopEnumType]},{data.S_kVAh[data.LoopEnumType]},{data.HZ[data.LoopEnumType]})";
+                                    $"'{ttime}','{ttimen.ToString("yyyy/MM/dd HH:mm:ss")}',{data.GatewayIndex},{data.DeviceIndex},{data.Sv[data.LoopEnumType]},{data.SA[data.LoopEnumType]},{data.S_kW[data.LoopEnumType]},{data.S_kWh[data.LoopEnumType]},{data.S_kVAR[data.LoopEnumType]},{data.S_kVARh[data.LoopEnumType]},{data.S_PF[data.LoopEnumType]},{data.S_kVA[data.LoopEnumType]},{data.S_kVAh[data.LoopEnumType]},{data.HZ[data.LoopEnumType]})";
                         InsertLogsql = $"INSERT INTO {setting.InitialCatalog}.SinglePhaseElectricMeter_Log (ttime,ttimen,GatewayIndex,DeviceIndex,v,a,kw,kwh,kvar,kvarh,pfe,kva,kvah,hz)VALUES(" +
-                                    $"'{ttimen:yyyyMMddHHmm00}','{ttimen.ToString("yyyy/MM/dd HH:mm:00")}',{data.GatewayIndex},{data.DeviceIndex},{data.Sv},{data.SA},{data.S_kW[data.LoopEnumType]},{data.S_kWh[data.LoopEnumType]},{data.S_kVAR[data.LoopEnumType]},{data.S_kVARh[data.LoopEnumType]},{data.S_PF[data.LoopEnumType]},{data.S_kVA[data.LoopEnumType]},{data.S_kVAh[data.LoopEnumType]},{data.HZ[data.LoopEnumType]})";
+                                    $"'{ttimen:yyyyMMddHHmm00}','{ttimen.ToString("yyyy/MM/dd HH:mm:00")}',{data.GatewayIndex},{data.DeviceIndex},{data.Sv[data.LoopEnumType]},{data.SA[data.LoopEnumType]},{data.S_kW[data.LoopEnumType]},{data.S_kWh[data.LoopEnumType]},{data.S_kVAR[data.LoopEnumType]},{data.S_kVARh[data.LoopEnumType]},{data.S_PF[data.LoopEnumType]},{data.S_kVA[data.LoopEnumType]},{data.S_kVAh[data.LoopEnumType]},{data.HZ[data.LoopEnumType]})";
                     }
                     break;
                 case PhaseAngleEnumType.T:
@@ -1005,9 +1005,9 @@ namespace ChargingPileSystem.Methods
                              $"hz={data.HZ[data.LoopEnumType]} " +
                              $"WHERE GatewayIndex = {data.GatewayIndex} AND DeviceIndex = {data.DeviceIndex}";
                         InsertForweb = $"INSERT INTO {setting.InitialCatalog}.SinglePhaseElectricMeter_ForWeb (ttime,ttimen,GatewayIndex,DeviceIndex,v,a,kw,kwh,kvar,kvarh,pfe,kva,kvah,hz)VALUES(" +
-                                    $"'{ttime}','{ttimen.ToString("yyyy/MM/dd HH:mm:ss")}',{data.GatewayIndex},{data.DeviceIndex},{data.Tv[data.LoopEnumType]},{data.TA[data.LoopEnumType]},{data.T_kW[data.LoopEnumType]},{data.T_kWh[data.LoopEnumType]},{data.T_kVAR[data.LoopEnumType]},{data.T_kVARh[data.LoopEnumType]},{data.T_PF[data.LoopEnumType]},{data.T_kVA},{data.T_kVAh[data.LoopEnumType]},{data.HZ[data.LoopEnumType]})";
+                                    $"'{ttime}','{ttimen.ToString("yyyy/MM/dd HH:mm:ss")}',{data.GatewayIndex},{data.DeviceIndex},{data.Tv[data.LoopEnumType]},{data.TA[data.LoopEnumType]},{data.T_kW[data.LoopEnumType]},{data.T_kWh[data.LoopEnumType]},{data.T_kVAR[data.LoopEnumType]},{data.T_kVARh[data.LoopEnumType]},{data.T_PF[data.LoopEnumType]},{data.T_kVA[data.LoopEnumType]},{data.T_kVAh[data.LoopEnumType]},{data.HZ[data.LoopEnumType]})";
                         InsertLogsql = $"INSERT INTO {setting.InitialCatalog}.SinglePhaseElectricMeter_Log (ttime,ttimen,GatewayIndex,DeviceIndex,v,a,kw,kwh,kvar,kvarh,pfe,kva,kvah,hz)VALUES(" +
-                                    $"'{ttimen:yyyyMMddHHmm00}','{ttimen.ToString("yyyy/MM/dd HH:mm:00")}',{data.GatewayIndex},{data.DeviceIndex},{data.Tv[data.LoopEnumType]},{data.TA[data.LoopEnumType]},{data.T_kW[data.LoopEnumType]},{data.T_kWh[data.LoopEnumType]},{data.T_kVAR[data.LoopEnumType]},{data.T_kVARh[data.LoopEnumType]},{data.T_PF[data.LoopEnumType]},{data.T_kVA},{data.T_kVAh[data.LoopEnumType]},{data.HZ[data.LoopEnumType]})";
+                                    $"'{ttimen:yyyyMMddHHmm00}','{ttimen.ToString("yyyy/MM/dd HH:mm:00")}',{data.GatewayIndex},{data.DeviceIndex},{data.Tv[data.LoopEnumType]},{data.TA[data.LoopEnumType]},{data.T_kW[data.LoopEnumType]},{data.T_kWh[data.LoopEnumType]},{data.T_kVAR[data.LoopEnumType]},{data.T_kVARh[data.LoopEnumType]},{data.T_PF[data.LoopEnumType]},{data.T_kVA[data.LoopEnumType]},{data.T_kVAh[data.LoopEnumType]},{data.HZ[data.LoopEnumType]})";
                     }
                     break;
             }
@@ -1019,17 +1019,17 @@ namespace ChargingPileSystem.Methods
                         {
                             case PhaseAngleEnumType.R:
                                 {
-                                    Proceduresql = $"EXEC ElectricdailykwhpriceProcedure '{ttime}',{data.GatewayIndex},{data.DeviceIndex},{data.R_kWh[data.LoopEnumType]},{BankAccountSetting.ElectricityCost}";
+                                    Proceduresql = $"EXEC ElectricdailykwhProcedure '{ttime}',{data.GatewayIndex},{data.DeviceIndex},{data.R_kWh[data.LoopEnumType]}";
                                 }
                                 break;
                             case PhaseAngleEnumType.S:
                                 {
-                                    Proceduresql = $"EXEC ElectricdailykwhpriceProcedure '{ttime}',{data.GatewayIndex},{data.DeviceIndex},{data.S_kWh[data.LoopEnumType]},{BankAccountSetting.ElectricityCost}";
+                                    Proceduresql = $"EXEC ElectricdailykwhProcedure '{ttime}',{data.GatewayIndex},{data.DeviceIndex},{data.S_kWh[data.LoopEnumType]}";
                                 }
                                 break;
                             case PhaseAngleEnumType.T:
                                 {
-                                    Proceduresql = $"EXEC ElectricdailykwhpriceProcedure '{ttime}',{data.GatewayIndex},{data.DeviceIndex},{data.T_kWh[data.LoopEnumType]},{BankAccountSetting.ElectricityCost}";
+                                    Proceduresql = $"EXEC ElectricdailykwhProcedure '{ttime}',{data.GatewayIndex},{data.DeviceIndex},{data.T_kWh[data.LoopEnumType]}";
                                 }
                                 break;
                         }
@@ -1041,17 +1041,17 @@ namespace ChargingPileSystem.Methods
                         {
                             case PhaseAngleEnumType.R:
                                 {
-                                    Proceduresql = $"CALL ElectricdailykwhpriceProcedure({ttime},{data.GatewayIndex},{data.DeviceIndex},{data.R_kWh[data.LoopEnumType]},{BankAccountSetting.ElectricityCost})";
+                                    Proceduresql = $"CALL ElectricdailykwhProcedure({ttime},{data.GatewayIndex},{data.DeviceIndex},{data.R_kWh[data.LoopEnumType]})";
                                 }
                                 break;
                             case PhaseAngleEnumType.S:
                                 {
-                                    Proceduresql = $"CALL ElectricdailykwhpriceProcedure({ttime},{data.GatewayIndex},{data.DeviceIndex},{data.S_kWh[data.LoopEnumType]},{BankAccountSetting.ElectricityCost})";
+                                    Proceduresql = $"CALL ElectricdailykwhProcedure({ttime},{data.GatewayIndex},{data.DeviceIndex},{data.S_kWh[data.LoopEnumType]})";
                                 }
                                 break;
                             case PhaseAngleEnumType.T:
                                 {
-                                    Proceduresql = $"CALL ElectricdailykwhpriceProcedure({ttime},{data.GatewayIndex},{data.DeviceIndex},{data.T_kWh[data.LoopEnumType]},{BankAccountSetting.ElectricityCost})";
+                                    Proceduresql = $"CALL ElectricdailykwhProcedure({ttime},{data.GatewayIndex},{data.DeviceIndex},{data.T_kWh[data.LoopEnumType]})";
                                 }
                                 break;
                         }
