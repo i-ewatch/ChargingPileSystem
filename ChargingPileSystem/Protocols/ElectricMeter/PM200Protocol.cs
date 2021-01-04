@@ -13,8 +13,8 @@ namespace ChargingPileSystem.Protocols.ElectricMeter
                 int Index = 0;
                 ushort[] kwhvalue = master.ReadHoldingRegisters(ID, 0, 2); //kwh
                 ushort[] kwvalue = master.ReadHoldingRegisters(ID, 8, 2);//kw
-                kWh = MathClass.work16to10(kwhvalue[Index], kwhvalue[Index + 1]) * 0.01;
-                kW = MathClass.work16to10(kwvalue[Index], kwvalue[Index + 1]) * 0.01;
+                kWh = MathClass.work16to10(kwhvalue[Index + 1], kwhvalue[Index]) * 0.01;
+                kW = MathClass.work16to10(kwvalue[Index + 1], kwvalue[Index]) * 0.001;
                 ConnectFlag = true;
             }
             catch (Exception ex)

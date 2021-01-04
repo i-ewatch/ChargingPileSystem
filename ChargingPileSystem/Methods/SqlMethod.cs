@@ -942,6 +942,7 @@ namespace ChargingPileSystem.Methods
             string Proceduresql = string.Empty;
             Checksql = $"SELECT * FROM SinglePhaseElectricMeter_ForWeb WHERE GatewayIndex = {data.GatewayIndex} AND DeviceIndex = {data.DeviceIndex}";
             Checksql_Log = $"SELECT * FROM SinglePhaseElectricMeter_Log WHERE GatewayIndex = {data.GatewayIndex} AND DeviceIndex = {data.DeviceIndex} AND ttime = '{ttimen:yyyyMMddHHmm00}'";
+            PhaseAngleEnumType = (PhaseAngleEnumType)data.PhaseAngleEnumType;
             switch (PhaseAngleEnumType)
             {
                 case PhaseAngleEnumType.R:

@@ -10,16 +10,16 @@ namespace ChargingPileSystem.Protocols.ElectricMeter
         {
             try
             {
-                ushort[] Voltage_Current_Unit = master.ReadHoldingRegisters(ID, 21, 1);
-                ushort[] Master_Unit = master.ReadHoldingRegisters(ID, 34, 1);
-                int Voltage_Unit = MathClass.work2to10(MathClass.work10to2(Voltage_Current_Unit[0]).Substring(0, 8));//電壓單位換算
-                int Current_Unit = MathClass.work2to10(MathClass.work10to2(Voltage_Current_Unit[0]).Substring(8, 8));//電流單位換算
+                ushort[] Voltage_Current_Unit = master.ReadHoldingRegisters(ID, 40, 1);
+                ushort[] Master_Unit = master.ReadHoldingRegisters(ID, 66, 2);
+                int Voltage_Unit = MathClass.work2to10(MathClass.work10to2(Voltage_Current_Unit[0]).Substring(8, 8));//電壓單位換算
+                int Current_Unit = MathClass.work2to10(MathClass.work10to2(Voltage_Current_Unit[0]).Substring(0, 8));//電流單位換算
                 int Unit = MathClass.work2to10(MathClass.work10to2(Master_Unit[0]).Substring(8, 8)); //kVA、kVAR、kW、kWh
-                ushort[] kwhValue = master.ReadHoldingRegisters(ID, 1, 2);//kWh
-                ushort[] Value = master.ReadHoldingRegisters(ID, 12, 9); //電壓電流
-                ushort[] Value1 = master.ReadHoldingRegisters(ID, 22, 12);//kVA、kVAR、kW
-                ushort[] HzValue = master.ReadHoldingRegisters(ID, 35, 1);//頻率
-                ushort[] PFValue = master.ReadHoldingRegisters(ID, 43, 1);//功率因數
+                ushort[] kwhValue = master.ReadHoldingRegisters(ID, 0, 2);//kWh
+                ushort[] Value = master.ReadHoldingRegisters(ID, 22, 9); //電壓電流
+                ushort[] Value1 = master.ReadHoldingRegisters(ID, 42, 12);//kVA、kVAR、kW
+                ushort[] HzValue = new ushort[] { Master_Unit[1] };//頻率
+                ushort[] PFValue = master.ReadHoldingRegisters(ID, 84, 1);//功率因數
                 #region 電壓單位換算
                 int Index = 0;
                 switch (Voltage_Unit)//電壓單位換算
@@ -259,7 +259,7 @@ namespace ChargingPileSystem.Protocols.ElectricMeter
                         break;
                 }
                 #endregion
-                HZ = HzValue[0] * 01;
+                HZ = HzValue[0] * 0.1;
                 PF = PFValue[0] * 0.001;
                 ConnectFlag = true;
             }

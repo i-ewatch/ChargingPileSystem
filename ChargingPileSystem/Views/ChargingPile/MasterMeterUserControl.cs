@@ -142,12 +142,12 @@ namespace ChargingPileSystem.Views.ChargingPile
                         case ElectricEnumType.PA310:
                             {
                                 PA310Protocol protocol = (PA310Protocol)Data[0];
-                                RSvlabelControl.Text = protocol.RSv.ToString("F1");
-                                STvlabelControl.Text = protocol.STv.ToString("F1");
-                                TRvlabelControl.Text = protocol.TRv.ToString("F1");
-                                RalabelControl.Text = protocol.RA.ToString("F1");
-                                SalabelControl.Text = protocol.SA.ToString("F1");
-                                TalabelControl.Text = protocol.TA.ToString("F1");
+                                RSvlabelControl.Text = protocol.RSv.ToString("F2");
+                                STvlabelControl.Text = protocol.STv.ToString("F2");
+                                TRvlabelControl.Text = protocol.TRv.ToString("F2");
+                                RalabelControl.Text = protocol.RA.ToString("F2");
+                                SalabelControl.Text = protocol.SA.ToString("F2");
+                                TalabelControl.Text = protocol.TA.ToString("F2");
                                 PFlabelControl.Text = protocol.PF.ToString("F2");
                                 kWlabelControl.Text = protocol.kW.ToString("F2");
                                 kWhlabelControl.Text = protocol.kWh.ToString("F2");
@@ -156,12 +156,12 @@ namespace ChargingPileSystem.Views.ChargingPile
                         case ElectricEnumType.HC660:
                             {
                                 HC6600Protocol protocol = (HC6600Protocol)Data[0];
-                                RSvlabelControl.Text = protocol.RSv.ToString("F1");
-                                STvlabelControl.Text = protocol.STv.ToString("F1");
-                                TRvlabelControl.Text = protocol.TRv.ToString("F1");
-                                RalabelControl.Text = protocol.RA.ToString("F1");
-                                SalabelControl.Text = protocol.SA.ToString("F1");
-                                TalabelControl.Text = protocol.TA.ToString("F1");
+                                RSvlabelControl.Text = protocol.RSv.ToString("F2");
+                                STvlabelControl.Text = protocol.STv.ToString("F2");
+                                TRvlabelControl.Text = protocol.TRv.ToString("F2");
+                                RalabelControl.Text = protocol.RA.ToString("F2");
+                                SalabelControl.Text = protocol.SA.ToString("F2");
+                                TalabelControl.Text = protocol.TA.ToString("F2");
                                 PFlabelControl.Text = protocol.PF.ToString("F2");
                                 kWlabelControl.Text = protocol.kW.ToString("F2");
                                 kWhlabelControl.Text = protocol.kWh.ToString("F2");
@@ -170,12 +170,12 @@ namespace ChargingPileSystem.Views.ChargingPile
                         case ElectricEnumType.CPM6:
                             {
                                 CPM6Protocol protocol = (CPM6Protocol)Data[0];
-                                RSvlabelControl.Text = protocol.RSv.ToString("F1");
-                                STvlabelControl.Text = protocol.STv.ToString("F1");
-                                TRvlabelControl.Text = protocol.TRv.ToString("F1");
-                                RalabelControl.Text = protocol.RA.ToString("F1");
-                                SalabelControl.Text = protocol.SA.ToString("F1");
-                                TalabelControl.Text = protocol.TA.ToString("F1");
+                                RSvlabelControl.Text = protocol.RSv.ToString("F2");
+                                STvlabelControl.Text = protocol.STv.ToString("F2");
+                                TRvlabelControl.Text = protocol.TRv.ToString("F2");
+                                RalabelControl.Text = protocol.RA.ToString("F2");
+                                SalabelControl.Text = protocol.SA.ToString("F2");
+                                TalabelControl.Text = protocol.TA.ToString("F2");
                                 PFlabelControl.Text = protocol.PF.ToString("F2");
                                 kWlabelControl.Text = protocol.kW.ToString("F2");
                                 kWhlabelControl.Text = protocol.kWh.ToString("F2");
@@ -184,12 +184,12 @@ namespace ChargingPileSystem.Views.ChargingPile
                         case ElectricEnumType.PA60:
                             {
                                 PA60Protocol protocol = (PA60Protocol)Data[0];
-                                RSvlabelControl.Text = protocol.RSv[ElectricConfig.LoopEnumType].ToString("F1");
-                                STvlabelControl.Text = protocol.STv[ElectricConfig.LoopEnumType].ToString("F1");
-                                TRvlabelControl.Text = protocol.TRv[ElectricConfig.LoopEnumType].ToString("F1");
-                                RalabelControl.Text = protocol.RA[ElectricConfig.LoopEnumType].ToString("F1");
-                                SalabelControl.Text = protocol.SA[ElectricConfig.LoopEnumType].ToString("F1");
-                                TalabelControl.Text = protocol.TA[ElectricConfig.LoopEnumType].ToString("F1");
+                                RSvlabelControl.Text = protocol.RSv[ElectricConfig.LoopEnumType].ToString("F2");
+                                STvlabelControl.Text = protocol.STv[ElectricConfig.LoopEnumType].ToString("F2");
+                                TRvlabelControl.Text = protocol.TRv[ElectricConfig.LoopEnumType].ToString("F2");
+                                RalabelControl.Text = protocol.RA[ElectricConfig.LoopEnumType].ToString("F2");
+                                SalabelControl.Text = protocol.SA[ElectricConfig.LoopEnumType].ToString("F2");
+                                TalabelControl.Text = protocol.TA[ElectricConfig.LoopEnumType].ToString("F2");
                                 PFlabelControl.Text = protocol.PF[ElectricConfig.LoopEnumType].ToString("F2");
                                 kWlabelControl.Text = protocol.kW[ElectricConfig.LoopEnumType].ToString("F2");
                                 kWhlabelControl.Text = protocol.kWh[ElectricConfig.LoopEnumType].ToString("F2");
@@ -198,12 +198,12 @@ namespace ChargingPileSystem.Views.ChargingPile
                         case ElectricEnumType.ABBM2M:
                             {
                                 ABBM2MProtocol protocol = (ABBM2MProtocol)Data[0];
-                                RSvlabelControl.Text = protocol.RSv.ToString("F1");
-                                STvlabelControl.Text = protocol.STv.ToString("F1");
-                                TRvlabelControl.Text = protocol.TRv.ToString("F1");
-                                RalabelControl.Text = protocol.RA.ToString("F1");
-                                SalabelControl.Text = protocol.SA.ToString("F1");
-                                TalabelControl.Text = protocol.TA.ToString("F1");
+                                RSvlabelControl.Text = protocol.RSv.ToString("F2");
+                                STvlabelControl.Text = protocol.STv.ToString("F2");
+                                TRvlabelControl.Text = protocol.TRv.ToString("F2");
+                                RalabelControl.Text = protocol.RA.ToString("F2");
+                                SalabelControl.Text = protocol.SA.ToString("F2");
+                                TalabelControl.Text = protocol.TA.ToString("F2");
                                 PFlabelControl.Text = protocol.PF.ToString("F2");
                                 kWlabelControl.Text = protocol.kW.ToString("F2");
                                 kWhlabelControl.Text = protocol.kWh.ToString("F2");
@@ -212,12 +212,12 @@ namespace ChargingPileSystem.Views.ChargingPile
                         case ElectricEnumType.PM200:
                             {
                                 PM200Protocol protocol = (PM200Protocol)Data[0];
-                                RSvlabelControl.Text = protocol.RSv.ToString("F1");
-                                STvlabelControl.Text = protocol.STv.ToString("F1");
-                                TRvlabelControl.Text = protocol.TRv.ToString("F1");
-                                RalabelControl.Text = protocol.RA.ToString("F1");
-                                SalabelControl.Text = protocol.SA.ToString("F1");
-                                TalabelControl.Text = protocol.TA.ToString("F1");
+                                RSvlabelControl.Text = protocol.RSv.ToString("F2");
+                                STvlabelControl.Text = protocol.STv.ToString("F2");
+                                TRvlabelControl.Text = protocol.TRv.ToString("F2");
+                                RalabelControl.Text = protocol.RA.ToString("F2");
+                                SalabelControl.Text = protocol.SA.ToString("F2");
+                                TalabelControl.Text = protocol.TA.ToString("F2");
                                 PFlabelControl.Text = protocol.PF.ToString("F2");
                                 kWlabelControl.Text = protocol.kW.ToString("F2");
                                 kWhlabelControl.Text = protocol.kWh.ToString("F2");
@@ -226,12 +226,12 @@ namespace ChargingPileSystem.Views.ChargingPile
                         case ElectricEnumType.TWCPM4:
                             {
                                 TWCPM4Protocol protocol = (TWCPM4Protocol)Data[0];
-                                RSvlabelControl.Text = protocol.RSv.ToString("F1");
-                                STvlabelControl.Text = protocol.STv.ToString("F1");
-                                TRvlabelControl.Text = protocol.TRv.ToString("F1");
-                                RalabelControl.Text = protocol.RA.ToString("F1");
-                                SalabelControl.Text = protocol.SA.ToString("F1");
-                                TalabelControl.Text = protocol.TA.ToString("F1");
+                                RSvlabelControl.Text = protocol.RSv.ToString("F2");
+                                STvlabelControl.Text = protocol.STv.ToString("F2");
+                                TRvlabelControl.Text = protocol.TRv.ToString("F2");
+                                RalabelControl.Text = protocol.RA.ToString("F2");
+                                SalabelControl.Text = protocol.SA.ToString("F2");
+                                TalabelControl.Text = protocol.TA.ToString("F2");
                                 PFlabelControl.Text = protocol.PF.ToString("F2");
                                 kWlabelControl.Text = protocol.kW.ToString("F2");
                                 kWhlabelControl.Text = protocol.kWh.ToString("F2");
