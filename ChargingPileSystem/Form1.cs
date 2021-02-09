@@ -95,6 +95,10 @@ namespace ChargingPileSystem
         /// 按鈕控制
         /// </summary>
         private ButtonControl ButtonControl { get; set; }
+        /// <summary>
+        /// 系統控制
+        /// </summary>
+        private SystemControl SystemControl;
         #endregion
         #region Methods
         /// <summary>
@@ -566,11 +570,19 @@ namespace ChargingPileSystem
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Location = new Point(0, 0);
-            Size = new Size(1920, 1080);
-            if (!SQLDataBaseFlag)
+            SystemControl = new SystemControl() { Form1 = this };
+            if (SystemControl.CHeckedSoftware())
             {
-                SqlComponentFail();
+                Form1_FormClosing(null, null);
+            }
+            else
+            {
+                Location = new Point(0, 0);
+                Size = new Size(1920, 1080);
+                if (!SQLDataBaseFlag)
+                {
+                    SqlComponentFail();
+                }
             }
         }
     }

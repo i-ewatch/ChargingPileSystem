@@ -164,6 +164,7 @@
     <Compile Include="Configuration\LogoSetting.cs" />
     <Compile Include="Configuration\SqlDBSetting.cs" />
     <Compile Include="Controllers\ButtonControl.cs" />
+    <Compile Include="Controllers\SystemControl.cs" />
     <Compile Include="EF_Module\ElectricConfig.cs" />
     <Compile Include="EF_Module\ElectricDailykwh.cs" />
     <Compile Include="EF_Module\ElectricDailykwhSetting.cs" />
